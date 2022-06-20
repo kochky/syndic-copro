@@ -2,8 +2,19 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  min-width:325px;
+  min-height:600px;
+  font-family: "Mulish",-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+@font-face {
+  font-family: "Gotham black";
+  src: url(../ressources/Gotham\ Black\ Regular.ttf);
+}
+
+@font-face {
+  font-family: "Gotham book";
+  src: url(../ressources/Gotham\ Book\ Regular.otf);
 }
 
 a {
@@ -13,4 +24,146 @@ a {
 
 * {
   box-sizing: border-box;
+  margin:0;
+  padding:0;
+}
+li {
+  list-style: none;
+}
+
+h1 {
+  font-weight: 900;
+  font-size: 20px;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: top;
+  font-family:"Gotham black";
+  font-size: 36px;
+}
+
+button + button {
+  margin-left: 10px;
+}
+.blue {
+  color:#4c34ff
+}
+
+.x {
+  position:absolute;
+  top:20px;
+  right:20px;
+}
+
+
+/* DataTable style */
+
+.MuiPaper-root {
+  box-shadow:none;
+}
+
+.MuiTableCell-root {
+  border-color:#959bb1
+}
+
+
+.MuiTableCell-head {
+
+  color:#959bb1
+}
+
+.MuiTablePagination-selectLabel{
+  line-height:0;
+  text-indent:-9999px;
+}
+
+/* .MuiTablePagination-selectLabel::after{
+  content:"Éléments par page" !important;
+  line-height:initial;
+  text-indent:0;
+  display:block;
+} */
+.css-1psng7p-MuiTablePagination-spacer,.MuiTablePagination-selectLabel .css-pdct74-MuiTablePagination-selectLabel,.css-16c50h-MuiInputBase-root-MuiTablePagination-select,.css-levciy-MuiTablePagination-displayedRows {
+  display:none;
+}
+.css-11bfvty-MuiToolbar-root-MuiTablePagination-toolbar {
+  display:flex;
+  justify-content: flex-end;
+}
+.Mui-active{
+  color:#4c34ff !important
+}
+.css-10by3a5-MuiButtonBase-root-MuiMenuItem-root-MuiTablePagination-menuItem:hover  {
+  color:#4c34ff !important;
+  background-color:whitesmoke
+}
+
+.css-1qgma8u-MuiButtonBase-root-MuiTableSortLabel-root.Mui-active .MuiTableSortLabel-icon {
+  color:#212121
+}
+
+.css-10by3a5-MuiButtonBase-root-MuiMenuItem-root-MuiTablePagination-menuItem.Mui-selected{
+  background-color: #959bb1;
+}
+
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+  background-color:#4c34ff
+
+  
+}
+
+.css-1rwt2y5-MuiButtonBase-root-MuiButton-root {
+  color:#959bb1;
+  border-color:#959bb1
+}
+
+.MuiList-root  li,.MuiFormControl-root ,.MuiOutlinedInput-root,.css-1yjla6e-MuiFormControl-root,.MuiInputLabel-root,.css-1ex1afd-MuiTableCell-root,.css-pdct74-MuiTablePagination-selectLabel,.css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root ,.css-levciy-MuiTablePagination-displayedRows,.css-16c50h-MuiInputBase-root-MuiTablePagination-select{
+  font-family:"Gotham book" !important;
+
+
+}
+
+
+@media screen and (max-width:425px){
+  .css-1ex1afd-MuiTableCell-root,.css-pdct74-MuiTablePagination-selectLabel,.css-levciy-MuiTablePagination-displayedRows,.css-16c50h-MuiInputBase-root-MuiTablePagination-select{
+    font-size:12px;
+  }
+}
+
+/* //Messagerie */
+
+
+.css-g9cew8-MuiInputBase-root-MuiInput-root:after{
+  border:0;
+}
+
+.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root,.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root:hover,.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root.Mui-focused {
+background-color: whitesmoke;
+
+}
+.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root:before ,
+.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root:after{
+  content:initial !important;
+  border:none
+}
+
+
+/* Icon mail */
+.css-11pbyhm-MuiSvgIcon-root {
+  color:#4c34ff 
+}
+.css-pwyk3z-MuiBadge-badge, .css-ndw7j8-MuiBadge-badge {
+  background-color:#4c34ff 
+}
+
+.white-bg span{
+  background-color:white !important;
+  color:#4c34ff
+}
+.white-bg svg {
+  color:white;
+  
+}
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+
+  min-width:0;
 }
