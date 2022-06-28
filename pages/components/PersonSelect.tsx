@@ -4,14 +4,16 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-type IdType ={
-    id:string,
-    status:string,
-    type:string
+type User={
+    name:string
 }
+type Props= {
+    value:string|null,
+    setValue:(value:string|null)=>void,
 
-export default function BasicSelect({id,status,type}:IdType) {
-  const [value, setValue] = React.useState(status);
+}
+export default function PersonSelect({value,setValue}:Props) {
+  const [users, setUsers] = useState<[User]|null>();
 
   const handleChange = (event:any) => {
     setValue(event.target.value);
@@ -25,42 +27,24 @@ export default function BasicSelect({id,status,type}:IdType) {
       "content-type": "application/json",
         "Authorization": token,
     };
-    let requestOptions
-    {type==="incidents" ? (requestOptions = {
+    
+    const requestOptions = {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({ 
-            query:` mutation{
-            changeStatusIncident(incidents:{_id:"${id}",status:"${value}"}){
-                _id
-                description
-                status
-                }
+            query:` {
+            users{
+                name
+              
+            }
             }`
         })
-      }
-      ):(
-        requestOptions = {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify({ 
-              query:` mutation{
-              changeStatusInfos(infos:{_id:"${id}",status:"${value}"}){
-                  _id
-                  description
-                  status
-                  }
-              }`
-          })
-        }
-
-      )
-    }
-
+    };
     fetch('http://localhost:4000/graphql', requestOptions)
     .then(response => response.json())
+    .then(response=>setUsers(response.data.users))
     .catch(error=>console.log(error))
-  }, [value])
+  }, [])
   
 
   return (
@@ -73,8 +57,7 @@ export default function BasicSelect({id,status,type}:IdType) {
           displayEmpty
           onChange={handleChange}
         >
-          <MenuItem value={"En attente"}>En attente</MenuItem>
-          <MenuItem value={"Publié"}>Publié</MenuItem>
+            {users && users.map(user=><MenuItem key={user.name} value={user.name}>{user.name}</MenuItem>)}
  
         </Select>
       </FormControl>

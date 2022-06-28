@@ -30,6 +30,9 @@ const Menu=styled.div `
         min-width:50px;
         max-width:50px;
     };
+    @media screen and (max-width:425px) {
+       box-shadow:none;
+    };
     
 `
 const Title=styled.h2 `

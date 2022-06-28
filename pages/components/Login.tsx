@@ -8,11 +8,10 @@ import {data} from '../../ressources/data'
 import {dataCopro} from '../../ressources/dataCopro'
 import { message} from '../../ressources/message'
 import Alert from '@mui/material/Alert';
-
+import { State } from "../dashboard";
+import { MenuContext } from "../dashboard";
 import { UserData } from "../dashboard";
-import { CoproData } from "../dashboard";
 import { MessageData } from "../dashboard";
-import { CoProType} from '../dashboard'
 import { MsgType } from "../dashboard";
 import { UserType} from '../dashboard'
   
@@ -73,11 +72,12 @@ const Link=styled.div `
 
 
 export const Login = () => {
+    
     const router = useRouter()
 
-    const copro = React.useContext (CoproData) as CoProType;
     const user = React.useContext (UserData) as UserType;
     const msg = React.useContext (MessageData) as MsgType;
+    const context = React.useContext (MenuContext) as State;
 
 
     const [username,setUsername]=useState<string | undefined>(undefined)
@@ -119,6 +119,7 @@ export const Login = () => {
                            provision{
                                year
                                montant
+                               paid
                            }
                            admin
                            
@@ -129,7 +130,11 @@ export const Login = () => {
                 };
             fetch('http://localhost:4000/graphql', requestOptions)
                 .then(response => response.json())
-                .then(response=>{user.setUser(response.data.loginUser);localStorage.setItem("user",JSON.stringify(response.data.loginUser)||'')})
+                .then(response=>{if(!response.errors) {user.setUser(response.data.loginUser)
+                    localStorage.setItem("user",JSON.stringify(response.data.loginUser)||'')
+                    context.setIsLogged(true) }
+                    else{setErrorMessage(response.errors[0].message)} 
+                                })
                 .catch(error=>setErrorMessage(error))
                 
 

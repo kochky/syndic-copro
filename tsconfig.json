@@ -15,6 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/components/Table.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/components/Finance/Table.jsx", "pages/components/Admin/Finance/FinanceTable.jsx", "pages/components/Admin/Provisions/ProvisionTable.jsx"],
   "exclude": ["node_modules"]
 }

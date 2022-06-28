@@ -1,27 +1,22 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react"
 import moment from 'moment'
 import 'moment/locale/fr'
 import { SideMenu } from "./components/SideMenu"
 import { Accueil } from "./components/Accueil"
-import { Finance } from './components/Finance'
-import { News } from "./components/News"
+import { Finance } from './components/Finance/Finance'
+import { Infos } from "./components/Info/Infos"
 import { Login } from "./components/Login"
-import { Incident } from "./components/Incident"
-import { Messagerie } from "./components/Messagerie"
+import { Incident } from "./components/Incidents/Incident"
+import { Messagerie } from "./components/Messagerie/Messagerie"
 import styled, { css } from 'styled-components'
 import {ThemeProvider} from "styled-components"
 import { theme } from "."
 import {Theme} from './index'
 import {message} from '../ressources/message'
 import { Password } from './components/Password'
-import { Admin } from './components/Admin'
-import { CreateUsers } from './components/CreateUsers'
-import { ModifyUsers} from "./components/ModifyUsers"
-import { ContactDelete } from "./components/ContactDelete"
-import { InfoDelete } from "./components/InfoDelete"
-import { CreateInfo} from "./components/CreateInfo"
-import { CreateIncident } from "./components/CreateIncident"
-import { IncidentDelete} from './components/IncidentDeleted'
+import { Admin } from './components/Admin/Admin'
+import Spinner from './components/Spinner'
 
 moment.locale("fr")
 export const UserData = React.createContext<UserType|null>(null);
@@ -42,22 +37,37 @@ export type ItemProps ={
     white?:boolean;
     underline?:boolean
 }
+type Provision= {
+    montant:number,
+    paid:boolean,
+    year:number
+}
  type User= {
     token:string,
     email:string ,
     name: string ,
     lot:number,
     millieme:string,
-    provision?:object[],
+    provision?:Provision[],
     password?:string,
     _id?:string,
     admin:boolean
 }
+type Releve={
+    _id:string,
+    date:string,
+    description:string,
+    type:string,
+    recette:number,
+    depense:number
+}
 
 type Finance ={
+    _id:string,
+    year:number,
     solde:number,
     actuel:number,
-    relevé:object[]
+    relevé:Releve[]
 }
 type News = {
     date:string,
@@ -72,11 +82,15 @@ type Incidents = {
     messageAdmin:string,
     _id:string,
 }
+type Contacts={
+    _id:string,
+    name:string
+}
  type Data= {
     infos?:News[] ,
-    finances?: Finance ,
+    finances?: Finance[] ,
     incident?:Incidents[],
-    proprio?:string[]
+    contacts?:Contacts[]
   };
 
  export type Message= {
@@ -84,7 +98,8 @@ type Incidents = {
     expediteur:string,
     destinataire:string,
     message:string,
-    lu:boolean
+    lu:boolean,
+    date:string
 }
 
 export type CoProType= {
@@ -122,28 +137,10 @@ export type State= {
     setActiveAdmin:(value:boolean)=>void,
     windowSize:number,
     setChangePassword:(value:boolean)=>void,
-    createUser:boolean,
-    setCreateUser:(value:boolean)=>void,
-    newUserCreated:boolean,
-    setNewUserCreated:(value:boolean)=>void,
-    userToModify:User|null,
-    setUserToModify:(value:User|null)=>void,
-    userToDelete:IdProps|null,
-    setUserToDelete:(value:IdProps|null)=>void,
-    infoToDelete:IdProps|null,
-    setInfoToDelete:(value:IdProps|null)=>void,
-    infoDeleted:boolean,
-    setInfoDeleted:(value:boolean)=>void,
-    createInfo:boolean,
-    setCreateInfo:(value:boolean)=>void,
-    createIncident:boolean,
-    setCreateIncident:(value:boolean)=>void,
     incidentsPresent:boolean,
     setIncidentsPresent:(value:boolean)=>void,
-    incidentToDelete:IdProps|null,
-    setIncidentToDelete:(value:IdProps|null)=>void,
-    incidentDeleted:boolean,
-    setIncidentDeleted:(value:boolean)=>void,
+    isLogged:boolean,
+    setIsLogged:(value:boolean)=>void
 }
 
 const Container=styled.div `
@@ -162,14 +159,17 @@ const Main=styled.div `
     height:90vh;
     justify-content:flex-start;
     min-height:540px;
-    overflow-y:scroll;    
+    overflow-y:scroll;
+        
+    @media screen and (max-width:425px) {
+        padding:0;
+    };  
 `
 const Header=styled.div `
     display:flex;
     justify-content:space-between;
     height:10vh;
     padding-top:30px;
-    margin-bottom:30px;
     border-radius 0 0 15px 15px;
     padding:0px 5%;
 
@@ -226,17 +226,8 @@ const Dashboard=()=> {
     const [activeAdmin,setActiveAdmin]=useState<boolean>(false)
     const [changePassword,setChangePassword]=useState<boolean>(false)
     const [meteo,setMeteo]=useState<string>('')
-    const [createUser, setCreateUser] = useState<boolean>(false);
-    const [newUserCreated, setNewUserCreated] = useState<boolean>(false);
-    const [userToModify,setUserToModify]=useState<User|null>(null)
-    const [userToDelete, setUserToDelete] = useState<IdProps|null>(null);
-    const [infoToDelete, setInfoToDelete] = useState<IdProps|null>(null);
-    const [infoDeleted, setInfoDeleted] =  useState<boolean>(false);
-    const [createInfo, setCreateInfo] = useState<boolean>(false);
-    const [createIncident, setCreateIncident] = useState<boolean>(false);
     const [incidentsPresent, setIncidentsPresent] = useState<boolean>(false);
-    const [incidentToDelete, setIncidentToDelete] = useState<IdProps|null>(null);
-    const [incidentDeleted, setIncidentDeleted] = useState<boolean>(false);
+    const [isLogged, setIsLogged] = useState<boolean>(false)
 
     const Meteo=styled.div `
         background:url("${meteo}");
@@ -264,7 +255,7 @@ const Dashboard=()=> {
 
 
 
-        if (localStorage.getItem('user')) {
+        if (localStorage.getItem('user') ) {
             const user= JSON.parse(localStorage.getItem("user")||'')
             const token="Bearer " + user.token
             const headers = {
@@ -277,30 +268,61 @@ const Dashboard=()=> {
                 headers: headers,
                 body: JSON.stringify({ 
                     query:` {
-                    infosNoAdmin{
-                        _id
-                        date
-                        description
-                        
+                        infosNoAdmin{
+                            _id
+                            date
+                            description
+                            
                         }
-                    incidentsNoAdmin{
-                        _id
-                        date
-                        description
-                        messageAdmin                        
+                        incidentsNoAdmin{
+                            _id
+                            date
+                            description
+                            messageAdmin                        
+                        }
+                        finances {
+                            _id
+                            year
+                            solde
+                            actuel
+                            releve {
+                                _id
+                                date
+                                description
+                                type
+                                recette
+                                depense
+                            }
+                        }
+                        contacts {
+                            _id
+                            name
+                        }
+                        messages{
+                            _id
+                            message
+                            expediteur
+                            destinataire
+                            lu
+                            date
                         }
                     }`
                 })
             };
             fetch('http://localhost:4000/graphql', requestOptions)
             .then(response => response.json())
-            .then(response=>{setData({...data,infos:response.data.infosNoAdmin,incident:response.data.incidentsNoAdmin}),  response.data.incidentsNoAdmin.map((incident:Incidents)=>incident.messageAdmin!="Résolu" && setIncidentsPresent(true))})
+            .then(r=>console.log(r))
+            // .then(response=>{if(!response.errors) {
+            //     setData({...data,infos:response.data.infosNoAdmin,incident:response.data.incidentsNoAdmin,finances:response.data.finances,contacts:response.data.contacts}) 
+            //     response.data.incidentsNoAdmin.map((incident:Incidents)=>incident.messageAdmin!="Résolu" && setIncidentsPresent(true))
+            //     setMessagerie(response.data.messages)
+
+            // }})
             .catch(error=>console.log(error))
 
-            setMessagerie(message)
-            setUser(user)
+            {! isLogged && setUser(user)}
         }
-      }, [])
+      }, [isLogged])
 
   
       
@@ -312,24 +334,16 @@ const Dashboard=()=> {
 
     return(
         <ThemeProvider  theme={theme}>
-          <MenuContext.Provider  value={{incidentToDelete:incidentToDelete,setIncidentToDelete:setIncidentToDelete,incidentDeleted:incidentDeleted,setIncidentDeleted:setIncidentDeleted,incidentsPresent:incidentsPresent,setIncidentsPresent:setIncidentsPresent,createIncident:createIncident,setCreateIncident:setCreateIncident,createInfo:createInfo,setCreateInfo:setCreateInfo,infoDeleted:infoDeleted,setInfoDeleted:setInfoDeleted,infoToDelete:infoToDelete,setInfoToDelete:setInfoToDelete,userToDelete:userToDelete,setUserToDelete:setUserToDelete,userToModify:userToModify,setUserToModify:setUserToModify,newUserCreated:newUserCreated,setNewUserCreated:setNewUserCreated,createUser:createUser,setCreateUser:setCreateUser,activeAdmin:activeAdmin,setActiveAdmin:setActiveAdmin,setChangePassword:setChangePassword,windowSize:windowSize,activeAccueil:activeAccueil,activeNews:activeNews,activeFinance:activeFinance,activeIncident:activeIncident,activeMessage:activeMessage,setActiveAccueil:setActiveAccueil,setActiveFinance:setActiveFinance,setActiveIncident:setActiveIncident,setActiveMessage:setActiveMessage,setActiveNews:setActiveNews}}>
+          <MenuContext.Provider  value={{isLogged:isLogged,setIsLogged:setIsLogged,incidentsPresent:incidentsPresent,setIncidentsPresent:setIncidentsPresent,activeAdmin:activeAdmin,setActiveAdmin:setActiveAdmin,setChangePassword:setChangePassword,windowSize:windowSize,activeAccueil:activeAccueil,activeNews:activeNews,activeFinance:activeFinance,activeIncident:activeIncident,activeMessage:activeMessage,setActiveAccueil:setActiveAccueil,setActiveFinance:setActiveFinance,setActiveIncident:setActiveIncident,setActiveMessage:setActiveMessage,setActiveNews:setActiveNews}}>
            <Container>
                 <CoproData.Provider  value={{data:data,setData:setData}}>
                 <UserData.Provider  value={{user:user,setUser:setUser}}>
                 <MessageData.Provider  value={{setMessagerie:setMessagerie,messagerie:messagerie,newMessage:newMessage,setNewMessage:setNewMessage}}>
                 {!user && <Login  />}
                 {changePassword && <Password  />}
-                { createUser && <CreateUsers />}
-                {userToModify && <ModifyUsers/>}
-                {userToDelete && <ContactDelete />}
-                {infoToDelete && <InfoDelete />}
-                {incidentToDelete && <IncidentDelete />}
+        
 
-                {createInfo && <CreateInfo />}
-                {createIncident && <CreateIncident/>}
-
-
-                {(user && data && messagerie) && 
+                {(user && data && messagerie) ?
                     <>
                     <SideMenu/>
                     <div style={{width:'100%'}}>
@@ -343,7 +357,7 @@ const Dashboard=()=> {
                         <Accueil  />
                             )}
                         {activeNews && (
-                            <News />
+                            <Infos />
                         )}
                         {activeFinance &&
                             <Finance/>
@@ -359,7 +373,8 @@ const Dashboard=()=> {
                         }
                     </Main>
                     </div>
-                    </>
+                    </>:
+                    <Spinner />
                     }
                 </MessageData.Provider>
                 </UserData.Provider>

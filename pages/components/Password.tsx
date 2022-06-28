@@ -11,7 +11,6 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -72,7 +71,6 @@ const Link=styled.div `
 
 
 export const Password = () => {
-    const router = useRouter()
 
     const value = React.useContext (MenuContext) as State;
 
@@ -109,10 +107,45 @@ export const Password = () => {
             newPasswordOne.match( /[^a-zA-Z\d]/g) &&
             newPasswordOne.length >= 8){
                 //doit vérifier l'ancien mot de passe puis confirme
-                setConfirmed(true)
-                setErrorOldPassword(false)
-                setErrorDifferentPassword(false)
-                setErrorFormat(false)
+
+                const user= JSON.parse(localStorage.getItem("user")||'')
+                const token="Bearer " + user.token
+                const headers = {
+                  "content-type": "application/json",
+                    "Authorization": token,
+                };
+                const requestOptions = {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({ 
+                        query:` mutation{
+                                changePassword(user:{password:"${oldPassword}",newPassword:"${newPasswordOne}"}){
+                                    name
+                                }
+                        }`
+                    })
+                  }
+            
+                fetch('http://localhost:4000/graphql', requestOptions)
+                .then(response => response.json())
+                .then((response)=>{
+                 if(!response.errors) {setConfirmed(true)
+                    setErrorOldPassword(false)
+                    setErrorDifferentPassword(false)
+                    setErrorFormat(false)
+                }else {
+                    setErrorOldPassword(true) 
+                    }
+                 })
+                .catch(error=>console.log(error))
+
+
+
+
+
+
+
+          
 
 
             }else if(newPasswordOne!==newPasswordTwo){

@@ -21,7 +21,7 @@ const Icon=styled.i `
 export default function BasicMenu({}) {
   const copro = React.useContext (CoproData) as CoProType;
     const user = React.useContext (UserData) as UserType;
-    const value = React.useContext (MenuContext) as State;
+    const context = React.useContext (MenuContext) as State;
     const msg = React.useContext (MessageData) as MsgType;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -37,7 +37,7 @@ export default function BasicMenu({}) {
   }
 
   const handleChangePassword = () => {
-    value.setChangePassword(true);
+    context.setChangePassword(true);
     setAnchorEl(null);
   };
 
@@ -45,6 +45,7 @@ export default function BasicMenu({}) {
     user.setUser(null)
     copro.setData(null)
     msg.setMessagerie(null)
+    context.setIsLogged(false)
     if (localStorage.getItem('user')) {
       localStorage.clear()
     }

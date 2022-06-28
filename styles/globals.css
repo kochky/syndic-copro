@@ -2,7 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  min-width:325px;
+  min-width:420px;
   min-height:600px;
   font-family: "Mulish",-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
@@ -166,4 +166,11 @@ background-color: whitesmoke;
 .css-1e6y48t-MuiButtonBase-root-MuiButton-root {
 
   min-width:0;
+}
+
+
+@media screen and (max-width:475px){
+  .table {
+    max-width:350px;
+  }
 }

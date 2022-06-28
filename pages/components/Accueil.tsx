@@ -9,15 +9,18 @@ import { CoproData } from "../dashboard";
 import { MessageData } from "../dashboard";
 import { CoProType} from '../dashboard'
 import { MsgType } from "../dashboard";
-import { Text } from './Finance'
+import { Text } from './Finance/Finance'
 import { UserType} from '../dashboard'
 import {Message} from '../dashboard'
+import moment from 'moment'
+moment.locale("fr")
 
 const CardContainer=styled.div`
         width:100%;
         display:flex;
         justify-content:space-between;
         row-gap:50px;
+        column-gap:50px;
         @media screen and (max-width:520px){
             flex-direction:column;
         }
@@ -38,6 +41,7 @@ const CardContainer=styled.div`
         box-shadow: rgb(159 162 191 / 18%) 0px 9px 16px, rgb(159 162 191 / 32%) 0px 2px 2px;
                 @media screen and (max-width:425px) {
             box-shadow:none;
+            
         };
 
         ${(props:ItemProps) => props.primary && css`
@@ -45,9 +49,8 @@ const CardContainer=styled.div`
             border-color:${(props:Theme)=>props.theme.tertiary};
             @media screen and (max-width:425px){
                 border-radius:0;
-                border-left:0;
-                border-right:0;
-                padding:0px;
+         
+                border:none
             }
         `}  
     `
@@ -65,6 +68,7 @@ const CardContainer=styled.div`
          };
          @media screen and (max-width:425px) {
             font-size:14px;
+            padding-left:15px;
          };
         &:hover {
                 
@@ -79,7 +83,7 @@ const CardContainer=styled.div`
         
     `
     const SmallCard=styled.div`
-        width:40%;
+        flex:1;
         @media screen and (max-width:520px){
             width:100%;
         }
@@ -142,17 +146,17 @@ export const Accueil=()=> {
         </BigCard>}
         <BigCard>
             <CardTitle underline onClick={()=>handleActive('news')}>Actualités</CardTitle>
-            <CardContent primary={true} ><ContentScroll>{(copro.data.infos && copro.data?.infos?.length>0 )? <>{copro.data?.infos?.map((info)=><Info key={info}><Text tertiary={true}>{info.date}  </Text><Text> &nbsp;{info.description}</Text></Info>)}</>:<Info><Text>Pas d&apos;actualité...</Text></Info> }</ContentScroll></CardContent>
+            <CardContent primary={true} ><ContentScroll>{(copro.data.infos && copro.data?.infos?.length>0 )? <>{copro.data?.infos?.map((info,index)=>index<5 &&<Info key={info}><Text tertiary={true}>{moment(info.date).format("dddd Do/MM")}  </Text><Text> &nbsp;{info.description}</Text></Info>)}</>:<Info><Text>Pas d&apos;actualité...</Text></Info> }</ContentScroll></CardContent>
         </BigCard>
         <CardContainer>
             <SmallCard>
                 <CardTitle underline onClick={()=>handleActive('incident')}>Incident</CardTitle>
-                <CardContent  primary={true}>{(value.incidentsPresent) ? <>{copro.data?.incident?.map((item)=>item.messageAdmin!="Résolu" && <Info key={item._id}><Text tertiary={true}>{item.date}  </Text><Text >&nbsp;{item.description}</Text></Info>)}</>:<Info><Text>Pas d&apos;incident</Text></Info>}</CardContent>
+                <CardContent  primary={true}>{(value.incidentsPresent) ? <>{copro.data?.incident?.map((item,index)=>(item.messageAdmin!="Résolu" && index<5) && <Info key={item._id}><Text tertiary={true}>{moment(item.date).format("dddd Do/MM")}  </Text><Text >&nbsp;{item.description}</Text></Info>)}</>:<Info><Text>Pas d&apos;incident</Text></Info>}</CardContent>
 
             </SmallCard>
             <SmallCard>
                 <CardTitle underline  onClick={()=>handleActive('message')}>Nouveaux messages</CardTitle>
-                <CardContent  primary={true}>{(msg.newMessage>0 )? <>{msg.messagerie?.map((msg:Message)=>(!msg.lu && msg.destinataire===user.user?.name )&&<Info><Text key={msg.id}>{msg.message}</Text></Info>)}</>:<Info>Pas de nouveau message</Info>}</CardContent>
+                <CardContent  primary={true}>{(msg.newMessage>0 )? <>{msg.messagerie?.map((msg:Message,index)=>(!msg.lu && msg.destinataire===user.user?.name && index<5 )&&<Info><Text key={msg.id}>{msg.message}</Text></Info>)}</>:<Info><Text>Pas de nouveau message</Text></Info>}</CardContent>
 
             </SmallCard>
         </CardContainer>
