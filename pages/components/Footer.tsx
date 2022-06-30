@@ -15,11 +15,11 @@ type Theme = {
 
 const FooterContainer= styled.div `
   width:100%;
-  height:5vh;
+  height:8vh;
   display:flex;
   flex-direction:column;
   justify-content:space-around;
-  align-items:center
+  align-items:center;
 `
 const LinkContainer= styled.div `
   width:100%;
@@ -44,7 +44,7 @@ export const Footer:NextPage = () => {
                 <Link href='/'>CGU</Link>
                 <Link href='/'>Mentions légales</Link>   
             </LinkContainer>  
-            <Author>Créée par Koch Christopher</Author>
+            <Author>Créé par Koch Christopher</Author>
 
 
         </FooterContainer>

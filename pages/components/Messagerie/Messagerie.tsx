@@ -17,7 +17,6 @@ import { MenuContext } from "../../dashboard";
 import { State } from "../../dashboard";
 
 const Container=styled.div `
-    border:1px solid;
     border-color:${(props:Theme)=>props.theme.tertiary};    
     width:100%;
     height:80%;

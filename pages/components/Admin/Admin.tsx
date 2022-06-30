@@ -11,6 +11,9 @@ const Container=styled.div `
   row-gap:20px;
   display:flex;
   flex-direction:column;
+  height:100vh;
+  overflow:scroll;
+  width:100%;
 
 
 `

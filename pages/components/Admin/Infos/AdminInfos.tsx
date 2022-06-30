@@ -66,8 +66,6 @@ const AddIcon=styled.div `
         align-self:flex-start
     }
 `
-const FormContainer=styled.div`
-    overflow:scroll`
 
 export type IdProps ={
     _id:string
@@ -86,9 +84,7 @@ export const AdminInfos= ( )=> {
                     <TopTitle>
                         <CardTitle>Infos</CardTitle>
                     </TopTitle>
-                <FormContainer>
                     <InfosTable infoDeleted={infoDeleted} setInfoDeleted={setInfoDeleted} setInfoToDelete={setInfoToDelete} />
-                </FormContainer>
                 </CardContent>
             </BigCard>
 

@@ -59,7 +59,7 @@ function stableSort(array, comparator) {
     {
       id: 'date',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'date',
     },
     {
@@ -197,21 +197,18 @@ function stableSort(array, comparator) {
                          <TableCell
                           component="th"
                           scope="row"
-                          padding="none"
                         >
                           {moment(row.date).format("dddd Do/MM")}
                         </TableCell>
                         <TableCell
                           component="th"
                           scope="row"
-                          padding="none"
                         >
                           {row.description}
                         </TableCell>
                         <TableCell
                           component="th"
                           scope="row"
-                          padding="none"
                         >
                           {row.messageAdmin}
                         </TableCell>

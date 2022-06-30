@@ -59,19 +59,19 @@ function stableSort(array, comparator) {
     {
       id: 'date',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'date',
     },
     {
       id: 'description',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'description',
     },
     {
         id: 'status',
         numeric: true,
-        disablePadding: false,
+        disablePadding: true,
         label: 'status',
       },
     
@@ -79,7 +79,7 @@ function stableSort(array, comparator) {
     {
       id: 'supprimer',
       numeric: true,
-      disablePadding: false,
+      disablePadding: true,
       label: "supprimer",
   }
   ];
@@ -235,7 +235,6 @@ function stableSort(array, comparator) {
                           component="th"
                           id={labelId}
                           scope="row"
-                          padding="none"
                           align="left"
                         >
                           {row.description}

@@ -15,18 +15,19 @@ import { UserData } from "../dashboard";
 
 const Menu=styled.div `
     background:white;
-    width:30%;
+    width:20%;
     height:100vh;
     min-height:100vh;
     padding-top:50px;
     padding-left:30px;
     padding-right:30px;  
     box-shadow: rgb(159 162 191 / 18%) 2px 0px 3px, rgb(159 162 191 / 32%) 1px 0px 1px;
+    
     @media screen and (max-width:768px) {
         padding-left:5px;
         padding-right:5px;  
     };
-    @media screen and (max-width:720px) {
+    @media screen and (max-width:768px) {
         min-width:50px;
         max-width:50px;
     };
@@ -56,7 +57,7 @@ const Title=styled.h2 `
 const SecondTitle=styled.h3 `
     color:${(props:Theme)=>props.theme.primary};
     font-family:"Gotham black";
-    margin-bottom:20px;
+    margin-bottom:50px;
     display:flex;
     justify-content:space-evenly;
     align-items:center;
@@ -71,6 +72,7 @@ const List=styled.ul `
     display:flex;
     flex-direction:column;
     height:50%;
+    align-items:center;
     @media screen and (max-width:425px) {
         font-size:12px;
     };
@@ -87,6 +89,7 @@ const Item=styled.li `
     display:flex;
     align-items:center;
     position:relative;
+    width:150px;
     ${(props:ItemProps) => props.active && css`
     color: white;
     background-color: ${(props:Theme)=>props.theme.secondary};
@@ -98,10 +101,11 @@ const Item=styled.li `
         box-shadow: rgb(159 162 191 / 18%) 0px 9px 16px, rgb(159 162 191 / 32%) 0px 2px 2px;
     }
     `}
-    @media screen and (max-width:720px) {
+    @media screen and (max-width:768px) {
         border-radius:0;
         padding:0;
         justify-content:center;
+        width:100%;
     };
 ` 
 
@@ -147,14 +151,14 @@ export const SideMenu=()=> {
     
     return (
         <Menu>
-           {value.windowSize >720 ?<><Title onClick={()=>router.push('/')}><i className="fa-solid fa-arrow-left"></i>&nbsp;Ma Copro&apos;</Title>
+           {value.windowSize >768 ?<><Title onClick={()=>router.push('/')}><i className="fa-solid fa-arrow-left"></i>&nbsp;Ma Copro&apos;</Title>
             <SecondTitle>Menu <BasicMenu/> </SecondTitle>
                 <List>
                     {!value.activeAccueil ? <Item  onClick={()=>handleActive('accueil')}><i className="fa-solid fa-table-columns blue"></i>&nbsp; Accueil</Item> : <Item active={true} ><i className="fa-solid fa-table-columns "></i> &nbsp;Accueil</Item>}
                     {!value.activeNews ? <Item  onClick={()=>handleActive('news')}><i className="fa-solid fa-newspaper blue"></i> &nbsp;Actualités</Item> :<Item active={true}><i className="fa-solid fa-newspaper "></i> &nbsp;Infos</Item>}
                     {!value.activeFinance ? <Item onClick={()=>handleActive('finance')}><i className="fa-solid fa-coins blue"></i> &nbsp;Finances</Item>: <Item active={true}><i className="fa-solid fa-coins "></i> &nbsp;Finances</Item>}
                     {!value.activeMessage ? <Item onClick={()=>handleActive('message')}> <Badge anchorOrigin={{ vertical: 'top', horizontal: 'left', }} badgeContent={msg.newMessage} color="success" > <MailOutlineIcon color='action' /></Badge> &nbsp;Messagerie </Item>: <Item active={true}><Badge anchorOrigin={{ vertical: 'top', horizontal: 'left', }} color="success" badgeContent={msg.newMessage}className="white-bg" > <MailOutlineIcon  /></Badge> &nbsp;Messagerie</Item>}
-                    {!value.activeIncident ? <Item onClick={()=>handleActive('incident')}><i className="fa-solid fa-triangle-exclamation blue"></i> &nbsp;Incident</Item>:<Item active={true}><i className="fa-solid fa-triangle-exclamation "></i> &nbsp;Incident</Item>}
+                    {!value.activeIncident ? <Item onClick={()=>handleActive('incident')}><i className="fa-solid fa-triangle-exclamation blue"></i> &nbsp;Incidents</Item>:<Item active={true}><i className="fa-solid fa-triangle-exclamation "></i> &nbsp;Incidents</Item>}
                     {user.user?.admin &&   <> {!value.activeAdmin ? <Item onClick={()=>handleActive('admin')}><i className="fa-solid fa-lock blue"></i> &nbsp;Admin</Item>:<Item active={true}> <i className="fa-solid fa-lock-open"></i> &nbsp;Admin</Item>}</>}
                 </List> </> :(
            <div style={{display:"flex",justifyContent:"center"}}>

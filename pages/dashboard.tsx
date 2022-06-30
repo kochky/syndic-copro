@@ -13,7 +13,6 @@ import styled, { css } from 'styled-components'
 import {ThemeProvider} from "styled-components"
 import { theme } from "."
 import {Theme} from './index'
-import {message} from '../ressources/message'
 import { Password } from './components/Password'
 import { Admin } from './components/Admin/Admin'
 import Spinner from './components/Spinner'
@@ -35,7 +34,8 @@ export type ItemProps ={
     big:boolean;
     minify:boolean;
     white?:boolean;
-    underline?:boolean
+    underline?:boolean,
+    small:boolean,
 }
 type Provision= {
     montant:number,
@@ -94,7 +94,7 @@ type Contacts={
   };
 
  export type Message= {
-    id:number,
+    _id:string,
     expediteur:string,
     destinataire:string,
     message:string,
@@ -115,7 +115,9 @@ export type MsgType={
     messagerie:Message[]|null,
     setMessagerie:(value:any)=>void,
     newMessage:number,
-    setNewMessage:(value:number)=>void
+    setNewMessage:(value:number)=>void,
+    setUpdateMessages:(value:boolean)=>void
+    updateMessages:boolean
 }
 export type IdProps ={
     _id:string
@@ -145,21 +147,25 @@ export type State= {
 
 const Container=styled.div `
     display:flex;
-    height:100vh;
+    max-height:100vh;
     width:100%;
     background-color:whitesmoke;
+    overflow:hidden;
+    box-shadow: rgb(159 162 191 / 18%) 0px 0px 5px, rgb(159 162 191 / 32%) 0px 0px 2px;
+
 
 `
 const Main=styled.div `
-    padding:0px 5%;
+    padding:5% 5%;
     width:100%;
     display:flex;
     flex-wrap:no-wrap;
     flex-direction:column;
     height:90vh;
+    padding-bottom:50px;
     justify-content:flex-start;
     min-height:540px;
-    overflow-y:scroll;
+    box-sizing:border-box;
         
     @media screen and (max-width:425px) {
         padding:0;
@@ -167,7 +173,7 @@ const Main=styled.div `
 `
 const Header=styled.div `
     display:flex;
-    justify-content:space-between;
+    justify-content:space-evenly;
     height:10vh;
     padding-top:30px;
     border-radius 0 0 15px 15px;
@@ -228,6 +234,7 @@ const Dashboard=()=> {
     const [meteo,setMeteo]=useState<string>('')
     const [incidentsPresent, setIncidentsPresent] = useState<boolean>(false);
     const [isLogged, setIsLogged] = useState<boolean>(false)
+    const [updateMessages, setUpdateMessages] = useState(true);
 
     const Meteo=styled.div `
         background:url("${meteo}");
@@ -247,13 +254,21 @@ const Dashboard=()=> {
         return () => window.removeEventListener("resize", handleResize);
       }, []); 
 
+
+      useEffect(() => {
+        user && setInterval(checkNewMessage, 5000) 
+        if(!user){
+            clearInterval(setInterval(checkNewMessage, 5000) )
+        }
+
+      }, [user])
+      
+
     //Redirect the user if no data found in localStorage
     useEffect(() => {
         fetch("https://prevision-meteo.ch/services/json/marseille")
         .then (r=>r.json())
         .then(r=>setMeteo(r.current_condition.icon))
-
-
 
         if (localStorage.getItem('user') ) {
             const user= JSON.parse(localStorage.getItem("user")||'')
@@ -298,6 +313,38 @@ const Dashboard=()=> {
                             _id
                             name
                         }
+                    
+                    }`
+                })
+            };
+            fetch('http://localhost:4000/graphql', requestOptions)
+            .then(response => response.json())
+            .then(response=>{if(!response.errors) {
+                setData({...data,infos:response.data.infosNoAdmin,incident:response.data.incidentsNoAdmin,finances:response.data.finances,contacts:response.data.contacts}) 
+                response.data.incidentsNoAdmin.map((incident:Incidents)=>incident.messageAdmin!="Résolu" && setIncidentsPresent(true))
+
+            }})
+            .catch(error=>console.log(error))
+
+            {! isLogged && setUser(user)}
+        }
+      }, [isLogged])
+
+
+      function checkNewMessage(){
+        if (localStorage.getItem('user') ) {
+            const user= JSON.parse(localStorage.getItem("user")||'')
+            const token="Bearer " + user.token
+            const headers = {
+            "content-type": "application/json",
+                "Authorization":token ,
+            };
+            const requestOptions = {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({ 
+                    query:` {
+                    
                         messages{
                             _id
                             message
@@ -309,22 +356,21 @@ const Dashboard=()=> {
                     }`
                 })
             };
-            fetch('http://localhost:4000/graphql', requestOptions)
-            .then(response => response.json())
-            .then(r=>console.log(r))
-            // .then(response=>{if(!response.errors) {
-            //     setData({...data,infos:response.data.infosNoAdmin,incident:response.data.incidentsNoAdmin,finances:response.data.finances,contacts:response.data.contacts}) 
-            //     response.data.incidentsNoAdmin.map((incident:Incidents)=>incident.messageAdmin!="Résolu" && setIncidentsPresent(true))
-            //     setMessagerie(response.data.messages)
+                fetch('http://localhost:4000/graphql', requestOptions)
+                .then(response => response.json())
+                .then(response=>{if(!response.errors) {
+                    setMessagerie(response.data.messages)
+                    setUpdateMessages(false)
 
-            // }})
-            .catch(error=>console.log(error))
+                }})
+            }
+      }
 
-            {! isLogged && setUser(user)}
+      useEffect(() => {
+        if (updateMessages ) {
+            checkNewMessage() 
         }
-      }, [isLogged])
-
-  
+      }, [updateMessages])
       
       useEffect(() => {
           setNewMessage(0)
@@ -338,12 +384,12 @@ const Dashboard=()=> {
            <Container>
                 <CoproData.Provider  value={{data:data,setData:setData}}>
                 <UserData.Provider  value={{user:user,setUser:setUser}}>
-                <MessageData.Provider  value={{setMessagerie:setMessagerie,messagerie:messagerie,newMessage:newMessage,setNewMessage:setNewMessage}}>
+                <MessageData.Provider  value={{setMessagerie:setMessagerie,messagerie:messagerie,newMessage:newMessage,setNewMessage:setNewMessage,setUpdateMessages:setUpdateMessages,updateMessages:updateMessages}}>
                 {!user && <Login  />}
                 {changePassword && <Password  />}
         
-
-                {(user && data && messagerie) ?
+                {(user && (!data || !messagerie)) &&<div style={{height:'100vh',width:'100vw',display:'flex',alignItems:'center',justifyContent:'center'}}><Spinner /></div> }
+                {(user && data && messagerie) &&
                     <>
                     <SideMenu/>
                     <div style={{width:'100%'}}>
@@ -373,8 +419,7 @@ const Dashboard=()=> {
                         }
                     </Main>
                     </div>
-                    </>:
-                    <Spinner />
+                    </>
                     }
                 </MessageData.Provider>
                 </UserData.Provider>

@@ -1,9 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import React, { useState, useEffect} from "react"
 import styled, { css } from 'styled-components'
 import { MessageData } from "../../dashboard";
 import { MsgType } from "../../dashboard";
 import {Theme} from '../../index'
+import moment from 'moment'
+moment.locale("fr")
 
 import {Message} from '../../dashboard'
 
@@ -22,6 +25,7 @@ const MessageList=styled.div`
     padding:20px;
     overflow:auto;
     height:100%;
+    border-radius:0 15px 0 0 ;
     background-color:white;
     @media screen and (max-width:768px){
         border:1px solid;
@@ -50,6 +54,16 @@ const Lu=styled.div`
     margin-bottom:15px;
     padding:0 15px;
 
+    color:${(props:Theme)=>props.theme.secondary};
+    ${(props:MessageProps) => props.receive && css`
+    align-self:flex-start
+  `}
+`
+const Date=styled.div`
+    align-self:flex-end;
+    margin-bottom:15px;
+    padding:0 15px;
+     font-size:12px;
     color:${(props:Theme)=>props.theme.tertiary};
     ${(props:MessageProps) => props.receive && css`
     align-self:flex-start
@@ -60,14 +74,45 @@ export const Messages=({contactActive}:Props)=> {
     const value = React.useContext (MessageData) as MsgType;
     const objDiv = document.getElementById('messageList')as HTMLInputElement | null;
 
+
+    function readMessage(_id:string){
+
+        const user= JSON.parse(localStorage.getItem("user")||'')
+        const token="Bearer " + user.token
+        const headers = {
+          "content-type": "application/json",
+            "Authorization": token,
+        };
+
+        const requestOptions = {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({ 
+                query:` mutation{
+                readMessage(messages: {_id:"${_id}"}){
+                    _id
+                 
+              }
+            }`
+          })
+      };
+    
+        fetch('http://localhost:4000/graphql', requestOptions)
+            .then(response => response.json())
+            .then(()=>value.setUpdateMessages(true))
+            
+            .catch(error=>console.log(error))
+    
+    }
+
+
     useEffect(() => {
-        value.setMessagerie((prevState:Message[])=>prevState.map((message:Message)=>message.expediteur===contactActive ? Object.assign(message,{lu:true}):message))
-        
+        value.messagerie?.map((message:Message)=>message.expediteur===contactActive && readMessage(message._id))
        if(objDiv!=null){
            objDiv.scrollTop = objDiv.scrollHeight
         }
 
-    }, [contactActive])
+    }, [contactActive,value.updateMessages])
     
     useEffect(() => {
 
@@ -82,8 +127,8 @@ export const Messages=({contactActive}:Props)=> {
         <MessageList id="messageList">
             {value.messagerie?.map((msg,index)=>(msg.destinataire===contactActive|| msg.expediteur===contactActive)&&(
                 <>{msg.destinataire===contactActive?
-                    <><MessageCard key={msg.message+index}>{msg.message}</MessageCard> {(value.messagerie?.[index+1]?.lu !==msg.lu && msg.destinataire===contactActive) && <Lu>{msg.lu?'Lu':'Envoyé'}</Lu>}</>:
-                    <MessageCard receive key={msg.message+index}>{msg.message}</MessageCard>
+                    <><MessageCard key={msg._id}>{msg.message}</MessageCard><Date>{moment(msg.date).format("Do/MM")}</Date> {(value.messagerie?.[index+1]?.lu !==msg.lu && msg.destinataire===contactActive) && <Lu>{msg.lu?'Lu':'Envoyé'}</Lu>}</>:
+                    <><MessageCard receive key={msg._id}>{msg.message}</MessageCard><Date receive>{moment(msg.date).format("Do/MM")}</Date></>
                     }</>))}
         </MessageList>
     )

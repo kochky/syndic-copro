@@ -60,37 +60,37 @@ function stableSort(array, comparator) {
     {
       id: 'name',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'name',
     },
     {
       id: 'email',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'email',
     },
     {
       id: 'lot',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'lot',
     },
     {
       id: 'millieme',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'millieme',
     },
     {
         id: 'modifier',
         numeric: true,
-        disablePadding: true,
+        disablePadding: false,
         label: "modifier",
     },
     {
       id: 'supprimer',
       numeric: true,
-      disablePadding: true,
+      disablePadding: false,
       label: "supprimer",
   }
   ];
@@ -248,7 +248,6 @@ function stableSort(array, comparator) {
                           component="th"
                           id={labelId}
                           scope="row"
-                          padding="none"
                         >
                           {row.name}
                         </TableCell>

@@ -59,25 +59,25 @@ function stableSort(array, comparator) {
     {
       id: 'name',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'name',
     },
     {
       id: 'year',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'year',
     },
     {
       id: 'montant',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'montant',
     },
     {
       id: 'paid',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'paid',
     },
     {
@@ -252,7 +252,6 @@ function stableSort(array, comparator) {
                       component="th"
                       id={labelId}
                       scope="row"
-                      padding="none"
                     >
                       {row.name}
                     </TableCell>

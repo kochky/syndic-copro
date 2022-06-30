@@ -15,6 +15,7 @@ import Spinner from "../../Spinner"
 const BigCard=styled.div`
     width:100%;
     height:100%;
+    overflow:hidden;
  
 `
 const CardTitle=styled.h3`
@@ -32,7 +33,7 @@ const TopTitle=styled.div `
     align-items:center;
     border-bottom:1px solid;
     border-color:${(props:Theme)=>props.theme.secondary};
-    @media screen and (max-width:425px){
+    @media screen and (max-width:525px){
         padding-right:0;
         flex-direction:column;
         row-gap:15px;
@@ -73,8 +74,7 @@ const AddIcon=styled.div `
     }
 
 `
-const FormContainer=styled.div`
-    overflow:scroll`
+
 
 type Releve= {
     _id:string,
@@ -185,13 +185,11 @@ export const AdminFinance= ( )=> {
                         <AddIcon onClick={()=>setCreateNewYear(true)}><i className="fa-solid fa-plus blue"></i>&nbsp;  Ajout nouvel année</AddIcon>
 
                     </TopTitle>
-                    <div style={{display:'flex',justifyContent:"space-evenly",padding:'30px'}}>
+                    <TopTitle style={{display:'flex',justifyContent:"space-evenly",padding:'30px'}}>
                         <span style={{display:'flex'}}> <Text tertiary>Montant départ:</Text><Text> &nbsp;{euro.format(sumBegin)}</Text></span>
                         <span style={{display:'flex'}}><Text tertiary>Montant restant:</Text><Text> &nbsp;{euro.format(sumNow)}</Text></span>
-                   </div>
-                <FormContainer >
+                   </TopTitle>
                {releveData ? <ReleveForm releveData={releveData} setReleveCreated={setReleveCreated}  setDeleteReleve={setDeleteReleve} setModifyReleve={setModifyReleve}/>:<Spinner />}
-               </FormContainer>
                 </CardContent>
             </BigCard>: 
             <CardContent>

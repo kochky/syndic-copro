@@ -61,13 +61,13 @@ function stableSort(array, comparator) {
     {
       id: 'date',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'date',
     },
     {
       id: 'description',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'description',
     },
     {
@@ -80,13 +80,13 @@ function stableSort(array, comparator) {
     {
       id: 'message',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'message',
     },
     {
       id: 'modifier',
       numeric: true,
-      disablePadding: true,
+      disablePadding: false,
       label: "modifier",
     },
       
@@ -253,12 +253,11 @@ function stableSort(array, comparator) {
                           component="th"
                           id={labelId}
                           scope="row"
-                          padding="none"
                         >
                           {row.description}
                         </TableCell>
                         <TableCell  align="center"><BasicSelect type={"incidents"} status={row.status}id={row._id}/></TableCell>
-                        <TableCell  align="center">{row.messageAdmin}</TableCell>
+                        <TableCell  align="left">{row.messageAdmin}</TableCell>
                         <TableCell onClick={()=>setIncidentToModify({_id:row._id,message:row.messageAdmin,description:row.description})} align="center"><i className="fa-solid fa-gear"></i></TableCell>
 
                         <TableCell onClick={()=>handleDeleteIncident(row._id)} align="center"><i className="fa-solid fa-xmark fa-2xl"></i></TableCell>

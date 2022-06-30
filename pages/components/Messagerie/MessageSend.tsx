@@ -21,6 +21,8 @@ const InputContainer=styled.div`
     padding:0 15px;
     column-gap:15px;
     background-color:whitesmoke;
+    border-radius:0 0px 15px 0 ;
+
     @media screen and (max-width:768px){
         border:1px solid;
         border-top:none;
@@ -57,17 +59,22 @@ export const MessageSender=({contactActive}:Props)=> {
             body: JSON.stringify({ 
                 query:` mutation{
                 createMessage(messages: {message:"${messageInput}",destinataire:"${contactActive}"}){
+                    _id
                     message
+                    destinataire
+                    expediteur
+                    lu
+                    date
               }
             }`
           })
       };
         {(value.messagerie && userValue.user && contactActive && messageInput) && (
-            value.setMessagerie(value.messagerie.concat([{id:1,expediteur:userValue.user.name,destinataire:contactActive,message:messageInput,lu:false,date:"test date"}])),
             setMessageInput(''),
             fetch('http://localhost:4000/graphql', requestOptions)
                 .then(response => response.json())
-                .then(r=>console.log(r))
+                .then(()=>value.setUpdateMessages(true))
+                
                 .catch(error=>console.log(error))
         )}
         

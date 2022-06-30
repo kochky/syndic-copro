@@ -56,8 +56,7 @@ const CardContent=styled.div`
         border-color:${(props:Theme)=>props.theme.tertiary};  
     }
 `
-const FormContainer=styled.div`
-overflow:scroll`
+
 
 type IdProps ={
     _id:string
@@ -85,9 +84,7 @@ export const AdminIncidents= ( )=> {
                     <TopTitle>
                         <CardTitle>Incidents</CardTitle>
                     </TopTitle>
-                <FormContainer>
                     <IncidentsAdminTable setIncidentToModify={setIncidentToModify}  setIncidentToDelete={setIncidentToDelete} setIncidentUpdated={setIncidentUpdated} incidentUpdated={incidentUpdated} />
-                </FormContainer>
                 </CardContent>
             </BigCard>
 

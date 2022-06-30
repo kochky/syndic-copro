@@ -69,8 +69,7 @@ const AddIcon=styled.div `
     }
 
 `
-const FormContainer=styled.div`
-    overflow:scroll`
+
 
 type User= {
     token:string,
@@ -106,10 +105,7 @@ export const AdminUsers= ( )=> {
                         <CardTitle>Utilisateurs</CardTitle>
                         <AddIcon onClick={()=>setCreateUser(true)}><i className="fa-solid fa-plus blue"></i>&nbsp;  Ajout utilisateur</AddIcon>
                     </TopTitle>
-                <FormContainer >
                     <UsersTable setUserToModify={setUserToModify} setUserToDelete={setUserToDelete} userUpdated={userUpdated} setUserUpdated={setUserUpdated}/>
-                </FormContainer >
-
                 </CardContent>
             </BigCard>
 

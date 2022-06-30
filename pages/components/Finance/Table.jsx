@@ -60,31 +60,31 @@ function stableSort(array, comparator) {
     {
       id: 'date',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'date',
     },
     {
       id: 'description',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'description',
     },
     {
       id: 'type',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'type',
     },
     {
       id: 'recette',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label:<i className="fa-solid fa-plus"></i>,
     },
     {
       id: 'depense',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: <i className="fa-solid fa-minus"></i>,
     }
   ];
@@ -102,7 +102,7 @@ function stableSort(array, comparator) {
           {headCells.map((headCell) => (
             <TableCell
               key={headCell.id}
-              align={headCell.numeric ? 'right' : 'center'}
+              align={headCell.numeric ? 'right' : 'left'}
               padding={headCell.disablePadding ? 'none' : 'normal'}
               sortDirection={orderBy === headCell.id ? order : false}
             >
@@ -219,14 +219,14 @@ function stableSort(array, comparator) {
                           component="th"
                           id={labelId}
                           scope="row"
-                          padding="none"
+                          align="left"
                         >
                           {moment(row.date).format("Do/MM")}
                         </TableCell>
                         <TableCell align="left">{row.description}</TableCell>
                         <TableCell align="left">{row.type}</TableCell>
-                        <TableCell align="right">{euro.format(row.recette)}</TableCell>
-                        <TableCell align="right">{euro.format(row.depense)}</TableCell>
+                        <TableCell align="left">{euro.format(row.recette)}</TableCell>
+                        <TableCell align="left">{euro.format(row.depense)}</TableCell>
 
                       </TableRow>
                     );

@@ -69,8 +69,7 @@ const AddIcon=styled.div `
     }
 
 `
-const FormContainer=styled.div`
-    overflow:scroll`
+
 
 
 type User= {
@@ -103,9 +102,7 @@ export const AdminProvisions= ( )=> {
                         <CardTitle>Provisions</CardTitle>
                         <AddIcon onClick={()=>setCreateProvision(true)}><i className="fa-solid fa-plus blue"></i>&nbsp;  Ajout provision</AddIcon>
                     </TopTitle>
-                <FormContainer >
                     <ProvisionTable setProvisionToModify={setProvisionToModify} setProvisionToDelete={setProvisionToDelete} provisionUpdate={provisionUpdate} setProvisionUpdated={setProvisionUpdated}/>
-                </FormContainer >
                 </CardContent>
             </BigCard>
 

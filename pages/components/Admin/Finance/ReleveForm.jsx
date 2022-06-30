@@ -61,31 +61,31 @@ function stableSort(array, comparator) {
     {
       id: 'date',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'date',
     },
     {
       id: 'description',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'description',
     },
     {
       id: 'type',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'type',
     },
     {
       id: 'recette',
       numeric: false,
-      disablePadding: true,
+      disablePadding: false,
       label: 'recette',
     },
     {
         id: 'depense',
         numeric: false,
-        disablePadding: true,
+        disablePadding: false,
         label: 'depense',
       },
     {
@@ -200,8 +200,7 @@ function stableSort(array, comparator) {
         minimumFractionDigits: 2
       });
     return (
-      <Box sx={{ width: '100%' }}className="table">
-        <Paper sx={{ width: '100%', mb: 2 }}>
+        <Paper className="container" sx={{ width: '100%', mb: 2 }}>
           <TableContainer>
             <Table
               aria-labelledby="tableTitle"
@@ -232,14 +231,12 @@ function stableSort(array, comparator) {
                      <TableCell
                           component="th"
                           scope="row"
-                          padding="none"
                         >
                           {moment(row.date).format("Do/MM")}
                         </TableCell>
                         <TableCell
                           component="th"
                           scope="row"
-                          padding="none"
                         >
                           {row.description}
                         </TableCell>
@@ -274,7 +271,6 @@ function stableSort(array, comparator) {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Paper>
-      </Box>
     );
   }
   

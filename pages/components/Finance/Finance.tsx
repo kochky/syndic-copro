@@ -13,10 +13,8 @@ export const Card=styled.div`
     align-items:center;
     border-radius:15px;
     justify-content:center;
-    border:1px solid;
     box-shadow: rgb(159 162 191 / 18%) 0px 9px 16px, rgb(159 162 191 / 32%) 0px 2px 2px;
     background-color:white;
-    border-color:${(props:Theme)=>props.theme.tertiary};
     padding:30px;
     flex:1;
     @media screen and (max-width:470px){
@@ -24,12 +22,10 @@ export const Card=styled.div`
     }
     @media screen and (max-width:420px){
         padding: 30px 0px;
-        border:none;
         
         border-radius:0;
         box-shadow:none;
 
-        border-color:${(props:Theme)=>props.theme.tertiary};  
     }
 `
 export const Title=styled.h3`
@@ -88,6 +84,9 @@ export const Text=styled.div `
             font-size:${props.size*0.6}px
         }
     `} 
+    @media screen and (max-width:768px){
+        font-size:14px
+    }
     @media screen and (max-width:425px){
         font-size:12px
     }

@@ -4,9 +4,6 @@ import styled, { css } from 'styled-components'
 import { Button } from './Button';
 import TextField from '@mui/material/TextField';
 import {Theme} from '../index'
-import {data} from '../../ressources/data'
-import {dataCopro} from '../../ressources/dataCopro'
-import { message} from '../../ressources/message'
 import Alert from '@mui/material/Alert';
 import { State } from "../dashboard";
 import { MenuContext } from "../dashboard";
@@ -101,7 +98,26 @@ export const Login = () => {
         if(forgotten){
             console.log("mot de passe envoyé")
             setConfirmed(true)
-
+            const requestOptions = {
+                method: 'POST',
+                headers: {  'Accept': 'application/json','Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    query:` mutation{
+                    forgotPassword(password:{email:"${username}"}){
+                        _id            
+                        }
+                    }`
+                })
+            };
+            fetch('http://localhost:4000/graphql', requestOptions)
+                .then(response => response.json())
+                .then(response=>{if(!response.errors) {user.setUser(response.data.loginUser)
+                    localStorage.setItem("user",JSON.stringify(response.data.loginUser)||'')
+                    context.setIsLogged(true) }
+                    else{setErrorMessage(response.errors[0].message)} 
+                                })
+                .catch(error=>setErrorMessage(error))
+            
         }else {
 
             const requestOptions = {
@@ -137,12 +153,6 @@ export const Login = () => {
                                 })
                 .catch(error=>setErrorMessage(error))
                 
-
-           //localStorage.setItem('user', JSON.stringify(data))
-           // user.setUser(data)
-           // copro.setData(dataCopro)
-            msg.setMessagerie(message)
-        // 
         }
    
     }
@@ -150,6 +160,8 @@ export const Login = () => {
     const handleClose=()=>{
         setConfirmed(false)
         setForgotten(false)
+        setErrorMail(false)
+        setErrorMessage(null)
 
     }
 

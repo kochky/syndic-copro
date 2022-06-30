@@ -79,7 +79,7 @@ export const Incident= ()=> {
             <BigCard>
                 <CardContent>
                     <TopTitle>
-                        <CardTitle>Incident</CardTitle>
+                        <CardTitle>Incidents</CardTitle>
                         <AddIcon onClick={()=>setCreateIncident(true)}><i className="fa-solid fa-plus blue"></i>&nbsp;  Signaler un incident</AddIcon>
                     </TopTitle>
                    {(copro.data && copro.data.incident && copro.data?.incident?.length>0 )? <IncidentTable />: <NoContent>Pas d&apos;incident remonté</NoContent>}
