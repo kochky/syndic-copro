@@ -59,7 +59,7 @@ button + button {
 /* DataTable style */
 
 .MuiPaper-root {
-  box-shadow:none;
+  box-shadow:none !important;
 }
 
 .MuiTableCell-root {
@@ -149,8 +149,13 @@ button + button {
 
 
 /* Icon mail */
-.css-1prob85{
+.BaseBadge-root .css-1prob85{
   color:#4c34ff!important
+}
+
+.MuiSvgIcon-roo .css-1prob85{
+  color:white !important
+
 }
 
 
