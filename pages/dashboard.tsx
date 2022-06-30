@@ -2,20 +2,21 @@
 import React, { useState, useEffect } from "react"
 import moment from 'moment'
 import 'moment/locale/fr'
-import { SideMenu } from "./components/SideMenu"
-import { Accueil } from "./components/Accueil"
-import { Finance } from './components/Finance/Finance'
-import { Infos } from "./components/Info/Infos"
-import { Login } from "./components/Login"
-import { Incident } from "./components/Incidents/Incident"
-import { Messagerie } from "./components/Messagerie/Messagerie"
+import  SideMenu  from "../components/SideMenu"
+import Accueil  from "../components/Accueil"
+import  Finance  from '../components/Finance/Finance'
+import  Infos  from "../components/Info/Infos"
+import  Login  from "../components/Login"
+import Incident  from "../components/Incidents/Incident"
+import Messagerie  from "../components/Messagerie/Messagerie"
 import styled, { css } from 'styled-components'
 import {ThemeProvider} from "styled-components"
 import { theme } from "."
 import {Theme} from './index'
-import { Password } from './components/Password'
-import { Admin } from './components/Admin/Admin'
-import Spinner from './components/Spinner'
+import  Password  from '../components/Password'
+import  Admin  from '../components/Admin/Admin'
+import Spinner from '../components/Spinner'
+import Script from 'next/script'
 
 moment.locale("fr")
 export const UserData = React.createContext<UserType|null>(null);
@@ -152,8 +153,6 @@ const Container=styled.div `
     background-color:whitesmoke;
     overflow:hidden;
     box-shadow: rgb(159 162 191 / 18%) 0px 0px 5px, rgb(159 162 191 / 32%) 0px 0px 2px;
-
-
 `
 const Main=styled.div `
     padding:5% 5%;
@@ -166,7 +165,6 @@ const Main=styled.div `
     justify-content:flex-start;
     min-height:540px;
     box-sizing:border-box;
-        
     @media screen and (max-width:425px) {
         padding:0;
     };  
@@ -178,19 +176,18 @@ const Header=styled.div `
     padding-top:30px;
     border-radius 0 0 15px 15px;
     padding:0px 5%;
-
     @media screen and (max-width:940px) {
-    flex-direction:column;
+        flex-direction:column;
     }; 
 `
 
 const Title=styled.h2 `
     color:${(props:Theme)=>props.theme.primary};
     ${(props:ItemProps) => props.black && css`
-    color:${(props:Theme)=>props.theme.fourth};
+        color:${(props:Theme)=>props.theme.fourth};
     `}
     ${(props:ItemProps) => props.white && css`
-    color:white;
+        color:white;
     `}
     height:100%;
     display:flex;
@@ -218,6 +215,8 @@ const Date=styled.h3 `
     };
 `
 
+
+
 const Dashboard=()=> {
     const [user,setUser]=useState<User|null>(null)
     const [data,setData]=useState<Data|null>(null)
@@ -236,6 +235,7 @@ const Dashboard=()=> {
     const [isLogged, setIsLogged] = useState<boolean>(false)
     const [updateMessages, setUpdateMessages] = useState(true);
 
+  
     const Meteo=styled.div `
         background:url("${meteo}");
         height:30px;
@@ -244,7 +244,6 @@ const Dashboard=()=> {
         margin-left:10px;
     `
   
-  
     useEffect(() => {
         function handleResize() {
           setWindowSize(window.innerWidth);
@@ -252,19 +251,17 @@ const Dashboard=()=> {
         handleResize()
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-      }, []); 
+    }, []); 
 
 
-      useEffect(() => {
+    useEffect(() => {
         user && setInterval(checkNewMessage, 5000) 
         if(!user){
             clearInterval(setInterval(checkNewMessage, 5000) )
-        }
-
-      }, [user])
+            }
+    }, [user])
       
 
-    //Redirect the user if no data found in localStorage
     useEffect(() => {
         fetch("https://prevision-meteo.ch/services/json/marseille")
         .then (r=>r.json())
@@ -286,8 +283,7 @@ const Dashboard=()=> {
                         infosNoAdmin{
                             _id
                             date
-                            description
-                            
+                            description    
                         }
                         incidentsNoAdmin{
                             _id
@@ -313,7 +309,6 @@ const Dashboard=()=> {
                             _id
                             name
                         }
-                    
                     }`
                 })
             };
@@ -344,7 +339,6 @@ const Dashboard=()=> {
                 headers: headers,
                 body: JSON.stringify({ 
                     query:` {
-                    
                         messages{
                             _id
                             message
@@ -361,9 +355,8 @@ const Dashboard=()=> {
                 .then(response=>{if(!response.errors) {
                     setMessagerie(response.data.messages)
                     setUpdateMessages(false)
-
                 }})
-            }
+           }
       }
 
       useEffect(() => {
@@ -373,15 +366,15 @@ const Dashboard=()=> {
       }, [updateMessages])
       
       useEffect(() => {
-          setNewMessage(0)
-          messagerie?.map(chat=>(chat.lu===false && chat.destinataire===user?.name) && setNewMessage(prevState=>prevState+1))
+       if(messagerie){   setNewMessage(0)
+          messagerie?.map(chat=>(chat.lu===false && chat.destinataire===user?.name) && setNewMessage(prevState=>prevState+1))}
       }, [messagerie])
-
 
     return(
         <ThemeProvider  theme={theme}>
           <MenuContext.Provider  value={{isLogged:isLogged,setIsLogged:setIsLogged,incidentsPresent:incidentsPresent,setIncidentsPresent:setIncidentsPresent,activeAdmin:activeAdmin,setActiveAdmin:setActiveAdmin,setChangePassword:setChangePassword,windowSize:windowSize,activeAccueil:activeAccueil,activeNews:activeNews,activeFinance:activeFinance,activeIncident:activeIncident,activeMessage:activeMessage,setActiveAccueil:setActiveAccueil,setActiveFinance:setActiveFinance,setActiveIncident:setActiveIncident,setActiveMessage:setActiveMessage,setActiveNews:setActiveNews}}>
            <Container>
+           <Script src="https://kit.fontawesome.com/3b79fd5521.js" strategy="lazyOnload" />
                 <CoproData.Provider  value={{data:data,setData:setData}}>
                 <UserData.Provider  value={{user:user,setUser:setUser}}>
                 <MessageData.Provider  value={{setMessagerie:setMessagerie,messagerie:messagerie,newMessage:newMessage,setNewMessage:setNewMessage,setUpdateMessages:setUpdateMessages,updateMessages:updateMessages}}>
@@ -393,31 +386,31 @@ const Dashboard=()=> {
                     <>
                     <SideMenu/>
                     <div style={{width:'100%'}}>
-                    <Header>
-                        <Title black>Bonjour {user.name} 👋</Title>
-                            <Date>{moment().format('dddd LL ')} <Meteo></Meteo> </Date>
-                        </Header>
-                    <Main >
-                    
-                    {activeAccueil &&(
-                        <Accueil  />
+                        <Header>
+                            <Title black>Bonjour {user.name} 👋</Title>
+                                <Date>{moment().format('dddd LL ')} <Meteo></Meteo> </Date>
+                            </Header>
+                        <Main >
+                        
+                        {activeAccueil &&(
+                            <Accueil  />
+                                )}
+                            {activeNews && (
+                                <Infos />
                             )}
-                        {activeNews && (
-                            <Infos />
-                        )}
-                        {activeFinance &&
-                            <Finance/>
-                        }
-                        {activeMessage &&
-                            <Messagerie/>
-                        }
-                        {activeIncident &&
-                            <Incident />
-                        }
-                        {activeAdmin &&
-                            <Admin />
-                        }
-                    </Main>
+                            {activeFinance &&
+                                <Finance/>
+                            }
+                            {activeMessage &&
+                                <Messagerie/>
+                            }
+                            {activeIncident &&
+                                <Incident />
+                            }
+                            {activeAdmin &&
+                                <Admin />
+                            }
+                        </Main>
                     </div>
                     </>
                     }

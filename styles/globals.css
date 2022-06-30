@@ -137,23 +137,25 @@ button + button {
   border:0;
 }
 
-.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root,.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root:hover,.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root.Mui-focused {
-background-color: whitesmoke;
+.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root,.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root:hover,.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root.Mui-focused,.css-180derq {
+  background-color: whitesmoke !important
 
 }
-.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root:before ,
-.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root:after{
+.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root:before ,.css-180derq:before
+.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root:after,.css-180derq:after{
   content:initial !important;
-  border:none
+  border: none!important
 }
 
 
 /* Icon mail */
-.css-11pbyhm-MuiSvgIcon-root {
-  color:#4c34ff 
+.css-1prob85{
+  color:#4c34ff!important
 }
-.css-pwyk3z-MuiBadge-badge, .css-ndw7j8-MuiBadge-badge {
-  background-color:#4c34ff 
+
+
+.css-pwyk3z-MuiBadge-badge, .css-ndw7j8-MuiBadge-badge,.css-obd3jf {
+  background-color:#4c34ff !important
 }
 
 .white-bg span{
