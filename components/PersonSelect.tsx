@@ -40,7 +40,7 @@ export default function PersonSelect({value,setValue}:Props) {
             }`
         })
     };
-    fetch('http://localhost:4000/graphql', requestOptions)
+    fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
     .then(response => response.json())
     .then(response=>setUsers(response.data.users))
     .catch(error=>console.log(error))

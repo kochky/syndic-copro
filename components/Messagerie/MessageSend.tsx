@@ -69,9 +69,10 @@ const MessageSender=({contactActive}:Props)=> {
             }`
           })
       };
+
         {(value.messagerie && userValue.user && contactActive && messageInput) && (
             setMessageInput(''),
-            fetch('http://localhost:4000/graphql', requestOptions)
+            fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
                 .then(response => response.json())
                 .then(()=>value.setUpdateMessages(true))
                 

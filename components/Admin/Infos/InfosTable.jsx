@@ -181,7 +181,7 @@ function stableSort(array, comparator) {
                 }`
             })
         };
-        fetch('http://localhost:4000/graphql', requestOptions)
+        fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
         .then(response => response.json())
         .then(response=>response.data.infos.map(info=>infoArray.push(createData(info._id,info.date,info.description,info.status))))
         .then(r=>setRows(infoArray))

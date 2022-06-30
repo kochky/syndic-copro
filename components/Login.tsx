@@ -109,7 +109,7 @@ const Login = () => {
                     }`
                 })
             };
-            fetch('http://localhost:4000/graphql', requestOptions)
+            fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
                 .then(response => response.json())
                 .then(response=>{if(!response.errors) {user.setUser(response.data.loginUser)
                     localStorage.setItem("user",JSON.stringify(response.data.loginUser)||'')
@@ -144,7 +144,7 @@ const Login = () => {
                         }`
                     })
                 };
-            fetch('http://localhost:4000/graphql', requestOptions)
+                fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
                 .then(response => response.json())
                 .then(response=>{if(!response.errors) {user.setUser(response.data.loginUser)
                     localStorage.setItem("user",JSON.stringify(response.data.loginUser)||'')

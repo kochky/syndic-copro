@@ -103,7 +103,8 @@ const ChangeDescriptionIncident = ({incidentToModify,setIncidentToModify,setInci
             }`
           })
       };
-        fetch('http://localhost:4000/graphql', requestOptions)
+      const apiUrl = process.env.NODE_ENV === 'production' ? process.env.FETCH_URL_PROD : process.env.FETCH_URL_DEV
+      fetch(apiUrl||'', requestOptions)
             .then(response => response.json())
             .then(data =>data.errors ? setErrorMessage(data.errors[0].message):setConfirmed(true))
             .then(()=>setIncidentUpdated(true))

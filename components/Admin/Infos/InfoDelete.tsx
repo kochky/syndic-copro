@@ -98,8 +98,8 @@ const InfoDelete = ({setInfoDeleted,infoToDelete,setInfoToDelete}:Props) => {
             }`
           })
       };
-        fetch('http://localhost:4000/graphql', requestOptions)
-            .then(response => response.json())
+      fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
+         .then(response => response.json())
             .then(data =>data.errors ? setErrorMessage(data.errors[0].message):setConfirmed(true))
             .then(data=>setInfoDeleted(true))
             .catch(error=>setErrorMessage(error))

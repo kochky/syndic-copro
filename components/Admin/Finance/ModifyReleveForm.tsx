@@ -145,7 +145,7 @@ export const ModifyReleveForm = ({setModifyReleve,setReleveCreated,yearSelected,
         })
     };
 
-    fetch('http://localhost:4000/graphql',requestOptions )
+    fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
         .then(response => response.json())
         .then(data =>data.errors ? setErrorMessage(data.errors[0].message):setConfirmed(true))
         .then(()=>setReleveCreated(true))

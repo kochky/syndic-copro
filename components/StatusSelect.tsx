@@ -57,7 +57,7 @@ export default function BasicSelect({id,status,type}:IdType) {
       )
     }
 
-    fetch('http://localhost:4000/graphql', requestOptions)
+    fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
     .then(response => response.json())
     .catch(error=>console.log(error))
     // eslint-disable-next-line react-hooks/exhaustive-deps

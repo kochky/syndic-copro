@@ -125,7 +125,7 @@ const Password = () => {
                     })
                   }
             
-                fetch('http://localhost:4000/graphql', requestOptions)
+                fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
                 .then(response => response.json())
                 .then((response)=>{
                  if(!response.errors) {setConfirmed(true)

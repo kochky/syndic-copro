@@ -18,10 +18,6 @@ const Container=styled.div `
 
 `
 
-
-
-
-
 const Admin=()=> {
 
   

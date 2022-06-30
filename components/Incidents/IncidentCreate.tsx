@@ -103,7 +103,8 @@ const IncidentCreate = ({setCreateIncident}:Props) => {
             }`
           })
       };
-      {description.length > 10 ?fetch('http://localhost:4000/graphql', requestOptions)
+    
+      {description.length > 10 ? fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
             .then(response => response.json())
             .then(data =>data.errors ? setErrorMessage(data.errors[0].message):setConfirmed(true))
             .catch(error=>setErrorMessage(error)):

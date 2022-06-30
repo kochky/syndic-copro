@@ -312,7 +312,7 @@ const Dashboard=()=> {
                     }`
                 })
             };
-            fetch('http://localhost:4000/graphql', requestOptions)
+            fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
             .then(response => response.json())
             .then(response=>{if(!response.errors) {
                 setData({...data,infos:response.data.infosNoAdmin,incident:response.data.incidentsNoAdmin,finances:response.data.finances,contacts:response.data.contacts}) 
@@ -350,8 +350,9 @@ const Dashboard=()=> {
                     }`
                 })
             };
-                fetch('http://localhost:4000/graphql', requestOptions)
-                .then(response => response.json())
+
+            fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
+            .then(response => response.json())
                 .then(response=>{if(!response.errors) {
                     setMessagerie(response.data.messages)
                     setUpdateMessages(false)
