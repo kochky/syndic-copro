@@ -46,7 +46,6 @@ const CardContent=styled.div`
     padding-right:0;
     border-radius:15px;
     margin-bottom:5px;
-    max-height:500px;
     min-height:500px;
     box-shadow: rgb(159 162 191 / 18%) 0px 9px 16px, rgb(159 162 191 / 32%) 0px 2px 2px;
 
