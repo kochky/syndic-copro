@@ -95,7 +95,7 @@ const IncidentCreate = ({setCreateIncident}:Props) => {
             headers: headers,
             body: JSON.stringify({ 
                 query:` mutation{
-                        createIncident(incidents:{description:"${description}"}){
+                        createIncident(incidents:{description:"${description.replace(/\n/g, "\\n")}"}){
                             description
                         
                

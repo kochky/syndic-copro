@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState,useEffect } from 'react';
 import styled, { css } from 'styled-components'
 import Button  from '../Button';
 import TextField from '@mui/material/TextField';
@@ -75,11 +75,10 @@ const InfosCreate = ({setCreateInfo}:Props) => {
     const [errorMessage, setErrorMessage] = useState<string|null>();
     const [description, setDescription] = useState('');
 
-    
+
       function submit(){
         setErrorMessage(null)
         setConfirmed(false)
-        const date=new Date()
         const user= JSON.parse(localStorage.getItem("user")||'')
         const token="Bearer " + user.token
         const headers = {
@@ -92,10 +91,8 @@ const InfosCreate = ({setCreateInfo}:Props) => {
             headers: headers,
             body: JSON.stringify({ 
                 query:` mutation{
-                        createInfo(infos:{description:"${description}"}){
+                        createInfo(infos:{description:"${description.replace(/\n/g, "\\n")}"}){
                             description
-                        
-               
               }
             }`
           })

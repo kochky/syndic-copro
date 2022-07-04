@@ -43,16 +43,16 @@ const MessageCard=styled.div`
     padding:15px;
     height:auto;
     margin-bottom:5px;
+    white-space:pre-line;
     box-shadow: rgb(159 162 191 / 18%) 0px 9px 16px, rgb(159 162 191 / 32%) 0px 2px 2px;
     ${(props:MessageProps) => props.receive && css`
-    align-self:flex-start
+    align-self:flex-start;
   `}
 `
 const Lu=styled.div`
     align-self:flex-end;
     margin-bottom:15px;
     padding:0 15px;
-
     color:${(props:Theme)=>props.theme.secondary};
     ${(props:MessageProps) => props.receive && css`
     align-self:flex-start

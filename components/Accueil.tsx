@@ -231,7 +231,7 @@ const Accueil=()=> {
             <CardSection>
 
                 <CardTitle underline onClick={()=>handleActive('news')}>Actualités</CardTitle>
-                <CardContent primary={true} ><>{(copro.data.infos && copro.data?.infos?.length>0 )? <>{copro.data?.infos?.map((info,index)=>index<5 &&<Info key={info}><Text tertiary={true}>{moment(info.date).format("dddd Do/MM")}  </Text><Text> &nbsp;{info.description}</Text></Info>)}</>:<Info><Text>Pas d&apos;actualité...</Text></Info> }</></CardContent>
+                <CardContent primary={true} ><>{(copro.data.infos && copro.data?.infos?.length>0 )? <>{copro.data?.infos?.map((info,index)=>index<5 &&<Info key={info}><Text tertiary={true}>{moment(info.date).format("dddd Do/MM")}  </Text><Text > &nbsp;{info.description}</Text></Info>)}</>:<Info><Text>Pas d&apos;actualité...</Text></Info> }</></CardContent>
             </CardSection>
 
         </Card>
