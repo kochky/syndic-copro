@@ -68,7 +68,7 @@ const Contact=({active,personne,handleActive=()=>{}}:Props)=> {
                     <PersonIcon color="action" />
                 </Badge>&nbsp;{personne}</ContactDiv>:
             <ContactDiv onClick={()=>handleActive(personne)}>
-                <Badge className="white-bg" badgeContent={numberOfMessages} color="success">
+                <Badge className="non-active" badgeContent={numberOfMessages} color="success">
                     <PersonIcon color="action" />
                 </Badge>
                 &nbsp; {personne}

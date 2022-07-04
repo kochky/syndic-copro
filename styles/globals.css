@@ -132,48 +132,39 @@ button + button {
 
 /* //Messagerie */
 
-
-.css-g9cew8-MuiInputBase-root-MuiInput-root:after{
-  border:0;
+.MuiSvgIcon-root{
+  color:#4c34ff
 }
 
-.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root,.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root:hover,.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root.Mui-focused,.css-180derq {
-  background-color: whitesmoke !important
 
-}
-.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root:before ,.css-180derq:before
-.css-1ra8cd2-MuiInputBase-root-MuiFilledInput-root:after,.css-180derq:after{
+.MuiInputBase-multiline:before,
+.css-180derq:after{
   content:initial !important;
-  border: none!important
+  border: none!important;
+  border-bottom:none !important;
 }
 
+.MuiInputBase-multiline{
+  font-family: "Gotham book";
+  background-color: whitesmoke !important;
+}
 
 /* Icon mail */
 .BaseBadge-root .css-1prob85{
-  color:#4c34ff!important
+  color:#4c34ff
 }
-
-.MuiSvgIcon-roo .css-1prob85{
-  color:white !important
-
-}
-
 
 .css-pwyk3z-MuiBadge-badge, .css-ndw7j8-MuiBadge-badge,.css-obd3jf {
   background-color:#4c34ff !important
 }
 
-.white-bg span{
+.non-active span {
   background-color:white !important;
-  color:#4c34ff
+  color:#4c34ff !important
 }
-.white-bg svg {
-  color:white;
+.non-active svg {
+  color:white !important;
   
-}
-.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
-
-  min-width:0;
 }
 
 
