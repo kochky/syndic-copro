@@ -14,7 +14,7 @@ import Paper from '@mui/material/Paper';
 import { visuallyHidden } from '@mui/utils';
 import { MenuContext } from "../../../pages/dashboard";
 import Spinner from '../../Spinner';
-
+import StatusProvision from './StatusProvision';
 
 
 function createData(name,year,montant,paid) {
@@ -257,7 +257,7 @@ function stableSort(array, comparator) {
                     </TableCell>
                         <TableCell align="left">{row.year}</TableCell>
                         <TableCell align="left">{euro.format(row.montant)}</TableCell>
-                        <TableCell align="left">{row.paid ? "Payé":"Non payé"}</TableCell>
+                        <TableCell> <StatusProvision  name={row.name}  montant={row.montant} paid={row.paid}  /></TableCell>
                         <TableCell onClick={()=>handleModifyOperation(row.name,row.year,row.montant)} align="center"><i className="fa-solid fa-user-pen"></i></TableCell>
                         <TableCell onClick={()=>setProvisionToDelete({name:row.name,montant:row.montant})} align="center"><i className="fa-solid fa-user-slash"></i></TableCell>
 

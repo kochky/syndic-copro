@@ -47,20 +47,6 @@ const Title=styled.h2 `
     }
 
 `
-const Link=styled.div `
-    color:${(props:Theme)=>props.theme.tertiary};
-    font-family:"Gotham book";
-    cursor:pointer;
-    height:20px;
-    &:hover {
-        border-bottom:1px solid;
-    }
-    @media screen and (max-width:475px){
-        font-size:12px;
-
-    }
-
-`
 const InputContainer=styled.div `
     display:flex;
     flex-direction:column;

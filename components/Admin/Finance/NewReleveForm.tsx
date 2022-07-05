@@ -132,7 +132,7 @@ export const NewReleveForm = ({setCreateReleve,setReleveCreated,yearSelected}:Pr
 
     fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
         .then(response => response.json())
-        .then(r=>console.log(r.data.createReleve))
+        .then(data =>data.errors ? setErrorMessage(data.errors[0].message):setConfirmed(true))
         .then(()=>setReleveCreated(true))
         .catch(error=>setErrorMessage(error))
     }

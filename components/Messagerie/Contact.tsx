@@ -23,7 +23,8 @@ const ContactDiv=styled.div`
     height:50px;
     display:flex;
     align-items:center;
-    justify-content:space-evenly;
+    justify-content:flex-start;
+    padding-left:10px;
     width:100%;
     border-radius:15px;
     @media screen and (max-width:768px){
@@ -64,14 +65,14 @@ const Contact=({active,personne,handleActive=()=>{}}:Props)=> {
         <>
         { active ?
             <ContactDiv active key={personne}>
-                <Badge  badgeContent={numberOfMessages} color="success">
+                <Badge badgeContent={numberOfMessages} color="success">
                     <PersonIcon color="action" />
-                </Badge>&nbsp;{personne}</ContactDiv>:
+                </Badge>{personne}</ContactDiv>:
             <ContactDiv onClick={()=>handleActive(personne)}>
                 <Badge className="non-active" badgeContent={numberOfMessages} color="success">
                     <PersonIcon color="action" />
                 </Badge>
-                &nbsp; {personne}
+                 {personne}
         </ContactDiv>}
        </>
 

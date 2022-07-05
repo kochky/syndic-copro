@@ -14,6 +14,7 @@ const Container=styled.div `
   height:100vh;
   overflow:scroll;
   width:100%;
+  padding-bottom:50px;
 
 
 `
@@ -21,7 +22,7 @@ const Container=styled.div `
 const Admin=()=> {
 
   
-    return (<div>
+    return (
       <Container >
         <AdminUsers />
         <AdminInfos />
@@ -29,7 +30,7 @@ const Admin=()=> {
         <AdminFinance />
         <AdminProvisions />
       </Container>
-    </div>)
+    )
 }
 
 export default Admin

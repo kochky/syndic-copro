@@ -58,7 +58,7 @@ const MessageSender=({contactActive}:Props)=> {
             headers: headers,
             body: JSON.stringify({ 
                 query:` mutation{
-                createMessage(messages: {message:"${messageInput.replace(/\n/g, "\\n")}",destinataire:"${contactActive}"}){
+                createMessage(messages: {message:"${messageInput?.replace(/\n/g, "\\n")}",destinataire:"${contactActive}"}){
                     _id
                     message
                     destinataire

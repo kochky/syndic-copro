@@ -231,7 +231,7 @@ const Accueil=()=> {
             <CardSection>
 
                 <CardTitle underline onClick={()=>handleActive('news')}>Actualités</CardTitle>
-                <CardContent primary={true} ><>{(copro.data.infos && copro.data?.infos?.length>0 )? <>{copro.data?.infos?.map((info,index)=>index<5 &&<Info key={info}><Text tertiary={true}>{moment(info.date).format("dddd Do/MM")}  </Text><Text > &nbsp;{info.description}</Text></Info>)}</>:<Info><Text>Pas d&apos;actualité...</Text></Info> }</></CardContent>
+                <CardContent primary={true} ><>{(copro.data.infos && copro.data?.infos?.length>0 )? <>{copro.data?.infos?.map((info,index)=>index<5 &&<Info key={info}><Text style={{whiteSpace:'nowrap',marginRight:'15px'}} tertiary={true}>{moment(info.date).format("dddd Do/MM")} </Text><Text >{info.description}</Text></Info>)}</>:<Info><Text>Pas d&apos;actualité...</Text></Info> }</></CardContent>
             </CardSection>
 
         </Card>
@@ -243,7 +243,7 @@ const Accueil=()=> {
                 </CardIcon>
                 <CardSection>
                     <CardTitle underline onClick={()=>handleActive('incident')}>Incident</CardTitle>
-                    <CardContent  primary={true}>{(value.incidentsPresent) ? <>{copro.data?.incident?.map((item,index)=>(item.messageAdmin!="Résolu" && index<5) && <Info key={item._id}><Text tertiary={true}>{moment(item.date).format("dddd Do/MM")}  </Text><Text style={{display:"block",overflow:'hidden',textOverflow:'ellipsis',whiteSpace: 'nowrap'}}>&nbsp;{item.description}</Text></Info>)}</>:<Info><Text>Pas d&apos;incident</Text></Info>}</CardContent>
+                    <CardContent  primary={true}>{(value.incidentsPresent) ? <>{copro.data?.incident?.map((item,index)=>(item.messageAdmin!="Résolu" && index<5) && <Info key={item._id}><Text tertiary={true}>{moment(item.date).format("dddd Do/MM")}  </Text><Text style={{display:"block",overflow:'hidden',textOverflow:'ellipsis',whiteSpace: 'nowrap'}}>{item.description}</Text></Info>)}</>:<Info><Text>Pas d&apos;incident</Text></Info>}</CardContent>
                 </CardSection>
             </Card>
    
