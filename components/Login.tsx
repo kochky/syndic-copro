@@ -28,6 +28,7 @@ const Modal=styled.div `
     width:50%;
     height:50%;
     max-height:400px;
+    min-height:400px;
     background:white;
     border-radius:15px;
     box-shadow: rgb(159 162 191 / 18%) 0px 9px 16px, rgb(159 162 191 / 32%) 0px 2px 2px;
@@ -146,7 +147,6 @@ const Login = () => {
                 fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
                 .then(response => response.json())
                 .then(response=>{if(!response.errors) {user.setUser(response.data.loginUser)
-                    console.log(response)
                     localStorage.setItem("user",JSON.stringify(response.data.loginUser)||'')
                     context.setIsLogged(true) }
                     else{setErrorMessage(response.errors[0].message)} 

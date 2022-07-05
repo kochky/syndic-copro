@@ -134,7 +134,7 @@ function stableSort(array, comparator) {
   
  
   
-  export default function EnhancedTable() {
+  export default function EnhancedTable({yearSelected}) {
 
     const value = useContext (CoproData) 
 
@@ -161,16 +161,15 @@ function stableSort(array, comparator) {
     };
   
  
-    const date= new Date()
   useEffect(() => {
     if(value.data && value.data.finances){
       setRows([])
       let operationArray=[]
-      value.data.finances.map(finance=>finance.year===date.getFullYear()&& finance.releve.map((releve)=>operationArray.push(createData(releve.date,releve.description,releve.type,releve.recette,releve.depense))))
+      value.data.finances.map(finance=>finance.year===yearSelected&& finance.releve.map((releve)=>operationArray.push(createData(releve.date,releve.description,releve.type,releve.recette,releve.depense))))
       setRows(operationArray)
     }
 
-  }, [])
+  }, [yearSelected])
   
   
     // Avoid a layout jump when reaching the last page with empty rows.

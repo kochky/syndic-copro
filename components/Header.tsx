@@ -19,11 +19,6 @@ const Wrapper= styled.div `
   padding-bottom:10px;
   }
 `
-const Welcome= styled.span `
-  color: #333;
-  font-size: 14px;
-  margin-right: 10px;
-`
 const Title= styled.h1 `
   color:${(props:Theme)=>props.theme.primary};
   @media screen and (max-width:768px) {

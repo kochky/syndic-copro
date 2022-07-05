@@ -5,10 +5,12 @@ import  Chart  from "./Chart"
 import { CoproData } from "../../pages/dashboard";
 import { CoProType} from '../../pages/dashboard'
 
+type Props={
+    yearSelected:number
+}
 
-const Budget=()=> {
+const Budget=({yearSelected}:Props)=> {
     const value = React.useContext (CoproData) as CoProType;
-    const date= new Date()
     const euro = new Intl.NumberFormat('fr-FR', {
         style: 'currency',
         currency: 'EUR',
@@ -21,11 +23,11 @@ const Budget=()=> {
         <CardSection>
             <CardDiv>
                 <Text size={14}tertiary={true}>Début année</Text>
-                { value?.data?.finances && value.data.finances.map((finance)=>(finance.year===date.getFullYear() )&& <Text size={16}>{euro.format(finance.solde)}</Text> ) }
+                { value?.data?.finances && value.data.finances.map((finance)=>(finance.year===yearSelected )&& <Text size={16}>{euro.format(finance.solde)}</Text> ) }
             </CardDiv>
             <CardDiv style={{alignSelf:"flex-end"}}>
                 <Text size={14} tertiary={true}>Actuel</Text>
-                { value?.data?.finances && value.data.finances.map((finance)=>finance.year===date.getFullYear() && <Text secondary size={24}>{euro.format(finance.actuel)}</Text> ) }
+                { value?.data?.finances && value.data.finances.map((finance)=>finance.year===yearSelected && <Text secondary size={24}>{euro.format(finance.actuel)}</Text> ) }
             </CardDiv>
           <Chart />
         </CardSection> 

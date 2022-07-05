@@ -4,7 +4,8 @@ import  Header  from '../components/Header'
 import  Banner  from '../components/Banner'
 import  Main  from '../components/Main'
 import Footer  from '../components/Footer'
-
+import Script from 'next/script'
+import Mentions from '../components/Mentions'
 import {ThemeProvider} from "styled-components"
 
 export const theme= {
@@ -26,9 +27,11 @@ const Home: NextPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Script src="https://kit.fontawesome.com/3b79fd5521.js" strategy="lazyOnload" />
       <Header  />
       <Banner />
       <Main />
+      <Mentions />
       <Footer />
     </ThemeProvider>
   )

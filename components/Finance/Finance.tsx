@@ -1,14 +1,17 @@
-import React from "react"
+import React, { useState} from "react"
 import styled, { css } from 'styled-components'
 import {Theme} from '../../pages/index'
 import { ItemProps } from '../../pages/dashboard'
 import  Releve  from './Relevé'
 import  Budget  from './Budget'
 import Provision  from './Provision'
-
+import YearPicking from "../Admin/Finance/YearPicking"
+import { CoproData } from "../../pages/dashboard";
+import { CoProType} from '../../pages/dashboard'
 
 export const Card=styled.div`
     display:flex;
+    flex:1;
     flex-direction:column;
     align-items:center;
     border-radius:15px;
@@ -27,6 +30,11 @@ export const Card=styled.div`
         box-shadow:none;
 
     }
+    ${(props:ItemProps) => props.year && css`
+    color:${(props:Theme)=>props.theme.tertiary};
+    background: rgba(76,52,255,0.3);
+    background: linear-gradient(346deg, rgba(76,52,255,1) 10%, rgba(76,52,255,0.3) 80%);
+        `}
 `
 export const Title=styled.h3`
     font-family:"Gotham black";
@@ -39,6 +47,8 @@ export const CardContainer=styled.div`
     justify-content:space-between;
     column-gap:50px;
     flex:1;
+    
+    
     @media screen and (max-width:1170px){
         flex-direction:column;
         row-gap:50px;
@@ -110,14 +120,28 @@ export const Flex=styled.div `
 `
 
 const Finance=() => {
+    const value = React.useContext (CoproData) as CoProType;
+    const date= new Date()
 
+    const [yearSelected, setYearSelected] = useState(date.getFullYear());
+    
     return (
      <>
+
       <CardContainer>
-        <Budget />
         <Provision /> 
+
+        <CardContainer style={{flexDirection:'column',rowGap:"20px"}}>
+            <Card style={{flex:0.5}} year>
+                <Flex>
+                    <CardTitle style={{margin:0}} >Choisir l'année : </CardTitle>
+                    {(value.data && value.data.finances) && <YearPicking financesData={value.data?.finances} yearSelected={yearSelected} setYearSelected={setYearSelected} />}
+                </Flex>
+            </Card>
+            <Budget yearSelected={yearSelected} />
+            </CardContainer>
         </CardContainer>
-        <Releve />
+        <Releve  yearSelected={yearSelected}/>
     </>
     )
 }

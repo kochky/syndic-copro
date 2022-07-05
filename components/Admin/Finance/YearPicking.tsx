@@ -6,11 +6,12 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 
-type Finances= {
+type Finance= {
+  _id:string,
   year:number,
   solde:number,
   actuel:number,
-  releve:[Releve]
+  releve:Releve[]
 }
 
 type Releve= {
@@ -25,7 +26,7 @@ type Releve= {
 type Props ={
     yearSelected:number,
     setYearSelected:(value:number)=>void
-    financesData:[Finances]|null
+    financesData:Finance[]|null
 }
 
 
@@ -36,7 +37,6 @@ export default function YearPicking({financesData,yearSelected,setYearSelected}:
   };
 
 
-  
 
   return (
     <Box sx={{ minWidth: 120 }}>

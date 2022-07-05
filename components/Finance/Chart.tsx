@@ -31,7 +31,7 @@ const CharContainer=styled.div `
 `
 
 const Chart=()=>{
-    const COLORS = [theme.tertiary, theme.secondary];
+    const COLORS = ['rgba(76,52,255,0.3', theme.secondary];
     const value = React.useContext (CoproData) as CoProType;
     const date=new Date()
 

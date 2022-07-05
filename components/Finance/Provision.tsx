@@ -19,7 +19,7 @@ const Provision=()=> {
       });
 
     return (
-        <Card>
+        <Card >
                 <CardTitle><i className="fa-solid fa-hand-holding-dollar"></i>  Provision </CardTitle>
                 <Flex style={{marginBottom:'20px'}}>
                     <Text tertiary={true}>Année</Text>

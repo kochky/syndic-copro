@@ -73,6 +73,7 @@ const List=styled.ul `
     flex-direction:column;
     height:50%;
     align-items:center;
+    width:100%;
     @media screen and (max-width:425px) {
         font-size:12px;
     };

@@ -15,11 +15,13 @@ type Theme = {
 
 const FooterContainer= styled.div `
   width:100%;
-  height:8vh;
+  height:150px;
   display:flex;
   flex-direction:column;
   justify-content:space-around;
   align-items:center;
+  background-color:white;
+ 
 `
 const LinkContainer= styled.div `
   width:100%;
@@ -33,16 +35,15 @@ const LinkContainer= styled.div `
 `
 
 const Author= styled.div `
-  color:${(props:Theme)=>props.theme.tertiary}
+  color:${(props:Theme)=>props.theme.tertiary};
+  padding:15px 0;
 
 `
 const Footer:NextPage = () => {
     return (
         <FooterContainer>
             <LinkContainer>  
-                <Link href='/'>Contact</Link>
-                <Link href='/'>CGU</Link>
-                <Link href='/'>Mentions légales</Link>   
+                <Link href='mailto:koch.christopher@hotmail.fr'>Contact</Link> 
             </LinkContainer>  
             <Author>Créé par Koch Christopher</Author>
 

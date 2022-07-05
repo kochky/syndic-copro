@@ -37,6 +37,7 @@ export type ItemProps ={
     white?:boolean;
     underline?:boolean,
     small:boolean,
+    year:boolean,
 }
 type Provision= {
     montant:number,
@@ -68,7 +69,7 @@ type Finance ={
     year:number,
     solde:number,
     actuel:number,
-    relevé:Releve[]
+    releve:Releve[]
 }
 type News = {
     date:string,
@@ -148,6 +149,7 @@ export type State= {
 
 const Container=styled.div `
     display:flex;
+    justify-content:center;
     max-height:100vh;
     width:100%;
     background-color:whitesmoke;
@@ -165,6 +167,7 @@ const Main=styled.div `
     justify-content:flex-start;
     min-height:540px;
     box-sizing:border-box;
+    overflow:auto;
     @media screen and (max-width:425px) {
         padding:0;
     };  
@@ -176,6 +179,10 @@ const Header=styled.div `
     padding-top:30px;
     border-radius 0 0 15px 15px;
     padding:0px 5%;
+    background-image:url("/offers_banner.png");
+    background-repeat:no-repeat;
+    background-position:right bottom;
+    background-size:100%;
     @media screen and (max-width:940px) {
         flex-direction:column;
     }; 
@@ -265,7 +272,7 @@ const Dashboard=()=> {
     useEffect(() => {
         fetch("https://prevision-meteo.ch/services/json/marseille")
         .then (r=>r.json())
-        .then(r=>setMeteo(r.current_condition.icon))
+        .then(r=>setMeteo(r.current_condition.icon||''))
 
         if (localStorage.getItem('user') ) {
             const user= JSON.parse(localStorage.getItem("user")||'')
