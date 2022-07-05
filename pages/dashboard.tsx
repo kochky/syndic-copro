@@ -309,19 +309,36 @@ const Dashboard=()=> {
                             _id
                             name
                         }
+                        userInfo {
+                            token
+                            userId
+                            name
+                            email
+                            lot
+                            millieme
+                            provision{
+                                year
+                                montant
+                                paid
+                            }
+                            admin
+                        }
                     }`
                 })
             };
+            setUser(user)
             fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
             .then(response => response.json())
             .then(response=>{if(!response.errors) {
+                if(!isLogged){
+                    localStorage.setItem("user",JSON.stringify(response.data.userInfo)||'')
+                    setUser(response.data.userInfo)
+                }
                 setData({...data,infos:response.data.infosNoAdmin,incident:response.data.incidentsNoAdmin,finances:response.data.finances,contacts:response.data.contacts}) 
                 response.data.incidentsNoAdmin.map((incident:Incidents)=>incident.messageAdmin!="Résolu" && setIncidentsPresent(true))
-
             }})
             .catch(error=>console.log(error))
 
-            {! isLogged && setUser(user)}
         }
       }, [isLogged])
 

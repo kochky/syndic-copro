@@ -96,7 +96,6 @@ const Login = () => {
 
     const handleSubmit=()=> {
         if(forgotten){
-            console.log("mot de passe envoyé")
             setConfirmed(true)
             const requestOptions = {
                 method: 'POST',
@@ -147,6 +146,7 @@ const Login = () => {
                 fetch(process.env.NEXT_PUBLIC_API_URL, requestOptions)
                 .then(response => response.json())
                 .then(response=>{if(!response.errors) {user.setUser(response.data.loginUser)
+                    console.log(response)
                     localStorage.setItem("user",JSON.stringify(response.data.loginUser)||'')
                     context.setIsLogged(true) }
                     else{setErrorMessage(response.errors[0].message)} 

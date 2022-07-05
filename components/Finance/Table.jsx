@@ -160,7 +160,7 @@ function stableSort(array, comparator) {
       setPage(0);
     };
   
-    //let rows = []
+ 
     const date= new Date()
   useEffect(() => {
     if(value.data && value.data.finances){
@@ -212,7 +212,7 @@ function stableSort(array, comparator) {
                         hover
                         role="checkbox"
                         tabIndex={-1}
-                        key={row.description}
+                        key={row.date+row.description+row.type}
                       >
                    
                         <TableCell

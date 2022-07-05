@@ -77,15 +77,10 @@ button + button {
   text-indent:-9999px;
 }
 
-/* .MuiTablePagination-selectLabel::after{
-  content:"Éléments par page" !important;
-  line-height:initial;
-  text-indent:0;
-  display:block;
-} */
-.css-1psng7p-MuiTablePagination-spacer,.MuiTablePagination-selectLabel .css-pdct74-MuiTablePagination-selectLabel,.css-16c50h-MuiInputBase-root-MuiTablePagination-select,.css-levciy-MuiTablePagination-displayedRows {
+/* .css-1psng7p-MuiTablePagination-spacer,.MuiTablePagination-selectLabel .css-pdct74-MuiTablePagination-selectLabel,.css-16c50h-MuiInputBase-root-MuiTablePagination-select,.css-levciy-MuiTablePagination-displayedRows {
   display:none;
-}
+} */
+
 .css-11bfvty-MuiToolbar-root-MuiTablePagination-toolbar {
   display:flex;
   justify-content: flex-end;
